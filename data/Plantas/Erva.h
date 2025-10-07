@@ -4,10 +4,22 @@
 
 #ifndef TP_POO_2526_ERVA_H
 #define TP_POO_2526_ERVA_H
+#include "Settings.h"
 #include "data/Planta.h"
 
 
 class Erva : public Planta{
+    static const int inicial_agua = Settings::ErvaDaninha::inicial_agua ;
+    static const int inicial_nutrientes = Settings::ErvaDaninha::inicial_nutrientes;
+    static const int absorcao_agua = Settings::ErvaDaninha::absorcao_agua;
+    static const int absorcao_nutrientes = Settings::ErvaDaninha::absorcao_nutrientes;
+    static const int morre_instantes = Settings::ErvaDaninha::morre_instantes;
+    static const int multiplica_nutrientes_maior = Settings::ErvaDaninha::multiplica_nutrientes_maior;
+    static const int multiplica_instantes = Settings::ErvaDaninha::multiplica_instantes;
+    static const int nova_nutrientes = Settings::ErvaDaninha::nova_nutrientes;
+    static const int original_nutrientes = Settings::ErvaDaninha::original_nutrientes;
+    // ------------------
+public:
 };
 
 

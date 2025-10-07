@@ -7,6 +7,7 @@
 
 
 class Planta {
+    static const int absorcao_nutrientes;
 };
 
 
