@@ -7,8 +7,8 @@
 
 
 class Planta {
-    static const int absorcao_nutrientes;
-    static const int multiplica_nutrientes_maior;
+    const int absorcao_nutrientes;
+    const int multiplica_nutrientes_maior;
 protected:
     Planta(int absorcao_nutrientes, int multiplica_nutrientes_maior)
     : absorcao_nutrientes(absorcao_nutrientes), multiplica_nutrientes_maior(multiplica_nutrientes_maior) {}
