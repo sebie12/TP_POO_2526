@@ -5,9 +5,10 @@
 #ifndef TP_POO_2526_ADUBO_H
 #define TP_POO_2526_ADUBO_H
 #include "Settings.h"
+#include "data/Interativos/Ferramenta.h"
 
 
-class Adubo {
+class Adubo : public Ferramenta {
     static const int capacidade = Settings::Adubo::capacidade;
     static const int dose = Settings::Adubo::dose;
 };

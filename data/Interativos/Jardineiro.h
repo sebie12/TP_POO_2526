@@ -4,6 +4,7 @@
 
 #ifndef TP_POO_2526_JARDINEIRO_H
 #define TP_POO_2526_JARDINEIRO_H
+#include "Ferramenta.h"
 #include "Settings.h"
 
 
@@ -12,6 +13,10 @@ class Jardineiro {
     static const int max_entradas_saidas = Settings::Jardineiro::max_entradas_saidas ;
     static const int max_plantacoes = Settings::Jardineiro::max_plantacoes;
     static const int max_colheitas = Settings::Jardineiro::max_colheitas;
+// Acabam as constantes
+    Ferramenta ferr;
+    Ferramenta ferrEquipada;
+
 };
 
 
