@@ -11,6 +11,7 @@
 
 
 class Erva : public Planta{
+    static constexpr char id = 'e';
     static const int inicial_agua = Settings::ErvaDaninha::inicial_agua ;
     static const int inicial_nutrientes = Settings::ErvaDaninha::inicial_nutrientes;
     static const int absorcao_agua = Settings::ErvaDaninha::absorcao_agua;

@@ -4,20 +4,25 @@
 
 #ifndef TP_POO_2526_JARDIM_H
 #define TP_POO_2526_JARDIM_H
+#include <memory>
+
 #include "BocadoDoSolo.h"
 #include "Settings.h"
 
 
 class Jardim {
-    static const int agua_min = Settings::Jardim::agua_min;
-    static const int agua_max = Settings::Jardim::agua_max;
-    static const int nutrientes_min = Settings::Jardim::nutrientes_min;
-    static const int nutrientes_max = Settings::Jardim::nutrientes_max;
+    static constexpr int nLines = 5;
+    static constexpr int nRows = 10;
+    static constexpr int agua_min = Settings::Jardim::agua_min;
+    static constexpr int agua_max = Settings::Jardim::agua_max;
+    static constexpr int nutrientes_min = Settings::Jardim::nutrientes_min;
+    static constexpr int nutrientes_max = Settings::Jardim::nutrientes_max;
 
     // Matrix para os "bocados do solo"
 
-    BocadoDoSolo espaço[10][10];
-
+    unique_ptr<BocadoDoSolo> area[nLines][nRows] = {};
+    Jardim(){}
+    ~Jardim()=default;
 };
 
 

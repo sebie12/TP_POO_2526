@@ -9,6 +9,7 @@
 #include "data/Planta.h"
 
 class Roseira : public Planta{
+    static constexpr char id = 'r';
     static const int inicial_agua = Settings::Roseira::inicial_agua;
     static const int inicial_nutrientes = Settings::Roseira::inicial_nutrientes;
     static const int perda_agua = Settings::Roseira::perda_agua;
@@ -22,6 +23,7 @@ class Roseira : public Planta{
     static const int original_nutrientes = Settings::Roseira::original_nutrientes;
     static const int original_agua_percentagem = Settings::Roseira::original_agua_percentagem;
     // ------------------
+public:
     Roseira(): Planta(Settings::Roseira::absorcao_nutrientes, Settings::Roseira::multiplica_nutrientes_maior){}
 };
 
