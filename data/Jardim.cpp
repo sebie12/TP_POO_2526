@@ -4,13 +4,17 @@
 
 #include "Jardim.h"
 Jardim::Jardim() {
-    for (int i = 0; i < nLines; i++) {
-        for (int j = 0; j < nRows; j++) {
-            area[i][j] = new BocadoDoSolo(agua_min, agua_max, nutrientes_min, nutrientes_max);
+    for (auto & i : area) {
+        for (auto & j : i) {
+            j = make_unique<BocadoDoSolo>(agua_min, agua_max, nutrientes_min, nutrientes_max, this);
         }
     }
 }
-Jardim::~Jardim() {
-    delete[][]area;
+void Jardim::iterate(int instante) const {
+    for (const auto & i : area) {
+        for (int j = 0; j < nLines; j++) {
+            i[j]->iterate(instante);
+        }
+    }
 }
 

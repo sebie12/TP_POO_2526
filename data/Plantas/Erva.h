@@ -12,16 +12,22 @@
 
 class Erva : public Planta{
     static constexpr char id = 'e';
-    static const int inicial_agua = Settings::ErvaDaninha::inicial_agua ;
-    static const int inicial_nutrientes = Settings::ErvaDaninha::inicial_nutrientes;
-    static const int absorcao_agua = Settings::ErvaDaninha::absorcao_agua;
-    static const int morre_instantes = Settings::ErvaDaninha::morre_instantes;
-    static const int multiplica_instantes = Settings::ErvaDaninha::multiplica_instantes;
-    static const int nova_nutrientes = Settings::ErvaDaninha::nova_nutrientes;
-    static const int original_nutrientes = Settings::ErvaDaninha::original_nutrientes;
+    static constexpr int inicial_agua = Settings::ErvaDaninha::inicial_agua ;
+    static constexpr int inicial_nutrientes = Settings::ErvaDaninha::inicial_nutrientes;
+    static constexpr int absorcao_agua = Settings::ErvaDaninha::absorcao_agua;
+    static constexpr int morre_instantes = Settings::ErvaDaninha::morre_instantes;
+    static constexpr int multiplica_instantes = Settings::ErvaDaninha::multiplica_instantes;
+    static constexpr int nova_nutrientes = Settings::ErvaDaninha::nova_nutrientes;
+    static constexpr int original_nutrientes = Settings::ErvaDaninha::original_nutrientes;
+    static constexpr int absorcao_nutrientes = Settings::ErvaDaninha::absorcao_nutrientes;
+    static constexpr int multiplica_nutrientes_maior = Settings::ErvaDaninha::multiplica_nutrientes_maior;
+
     // ------------------
 public:
-    Erva(): Planta(Settings::ErvaDaninha::absorcao_nutrientes, Settings::ErvaDaninha::multiplica_nutrientes_maior){}
+    Erva();
+    char getId() const override;
+    int pasaInstante(int agua, int nutrientes, int instante) override;
+    bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
 };
 
 

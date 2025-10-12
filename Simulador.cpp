@@ -3,3 +3,14 @@
 //
 
 #include "Simulador.h"
+Simulador::Simulador() {
+    instante = 0;
+}
+
+void Simulador::Run() {
+
+}
+
+void Simulador::readCommand(const string& comm) {
+
+}

@@ -18,11 +18,12 @@ class Jardim {
     static constexpr int nutrientes_min = Settings::Jardim::nutrientes_min;
     static constexpr int nutrientes_max = Settings::Jardim::nutrientes_max;
 
-    // Matrix para os "bocados do solo"
-
     unique_ptr<BocadoDoSolo> area[nLines][nRows] = {};
-    Jardim(){}
-    ~Jardim()=default;
+    // Matrix para os "bocados do solo"
+public:
+    Jardim();
+    void iterate(int instante) const;
+
 };
 
 
