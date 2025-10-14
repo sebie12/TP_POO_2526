@@ -4,23 +4,25 @@
 
 #ifndef TP_POO_2526_PLANTA_H
 #define TP_POO_2526_PLANTA_H
-
+#include <memory>
 
  class Planta {
     int lastInstanceNoWater, lastInstanceNoNutri, lastInstanceExpansion;
     int agua, nutrientes;
 
-public:
+ public:
      Planta();
-
     virtual ~Planta() = default;
+
     enum plantTypes{
-        CACTO,
-        ERVA,
-        PLANTAEXOTICA,
-        ROSEIRA
+        CACTO = 'c',
+        ERVA = 'e',
+        PLANTAEXOTICA = 'x',
+        ROSEIRA = 'r',
+        NONE = 'n'
     };
-    static Planta* createPlant(plantTypes type); // Função statica para a criação das plantas
+    static std::unique_ptr<Planta> createPlant(char type); // Função statica para a criação das plantas
+
     virtual int pasaInstante(int agua, int nutrientes, int instante); // virtual pq vai ser mudada em cada filho
     virtual bool verificaMorte(int agua, int nutrientes, int nInstantes);
     virtual bool verificaExpansão(int agua, int nutrientes); // Verifica se a planta vai se expandir num bocado vizinho

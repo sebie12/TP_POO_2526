@@ -4,6 +4,8 @@
 
 #include "Planta.h"
 
+#include <memory>
+
 #include "Plantas/Cacto.h"
 #include "Plantas/Erva.h"
 #include "Plantas/Roseira.h"
@@ -11,18 +13,20 @@
 Planta::Planta() : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), lastInstanceExpansion(-1), agua(0), nutrientes(0){
 }
 
-Planta *Planta::createPlant(const plantTypes type) {
+std::unique_ptr<Planta> Planta::createPlant(const char type) {
     switch (type) {
-        case CACTO:
-            return new Cacto();
-        case ERVA:
-            return new Erva();
-        case ROSEIRA:
-            return new Roseira();
+        case 'c':
+            return std::make_unique<Cacto>();
+        case 'e':
+            return std::make_unique<Erva>();
+        case 'r':
+            return std::make_unique<Roseira>();
         default:
             return nullptr;
     }
 }
+
+
 int Planta::getLastInstanceNoWater() const {
     return lastInstanceNoWater;
 }

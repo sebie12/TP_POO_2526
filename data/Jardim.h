@@ -11,19 +11,28 @@
 
 
 class Jardim {
-    static constexpr int nLines = 5;
-    static constexpr int nRows = 10;
+    int nLines;
+    int nCols;
     static constexpr int agua_min = Settings::Jardim::agua_min;
     static constexpr int agua_max = Settings::Jardim::agua_max;
     static constexpr int nutrientes_min = Settings::Jardim::nutrientes_min;
     static constexpr int nutrientes_max = Settings::Jardim::nutrientes_max;
 
-    unique_ptr<BocadoDoSolo> area[nLines][nRows] = {};
+    BocadoDoSolo ***area ;
     // Matrix para os "bocados do solo"
 public:
-    Jardim();
+    enum codeIt {
+        EXPAND,
+        DEAD,
+        ALIVE,
+        NONE
+    };
+    Jardim(int linhas, int colunas);
+    ~Jardim();
     void iterate(int instante) const;
+    void processaCambio(codeIt tipo, int linha, int col) const;
 
+    void expand(int linha, int col) const;
 };
 
 

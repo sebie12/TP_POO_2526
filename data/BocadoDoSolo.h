@@ -12,18 +12,18 @@
 using namespace std;
 
 class BocadoDoSolo {
-    Jardim * jardim;
-    Planta * planta;
-    Jardineiro * jardineiro;
+    unique_ptr<Planta> planta;
+    shared_ptr<Planta> jardineiro;
     int agua, nutrientes;
 public:
-    BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax, Jardim * jardim);
-
+    BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~BocadoDoSolo();
-    void iterate(int instante);
+    Jardim::codeIt iterate(int instante);
     int aguaDada(int percentagem);
     int nutrientesPerdidos(int unidades);
     static void feedFromDeadPlant(int nutrientes);
+    char getIdFromPlant()const;
+    bool newPlant(char type);
 };
 
 

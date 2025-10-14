@@ -3,33 +3,31 @@
 //
 
 #include "BocadoDoSolo.h"
-BocadoDoSolo::BocadoDoSolo(const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax, Jardim *jardim)
-: jardim(jardim), planta(nullptr), jardineiro(nullptr)
-{
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<int> randAgua(aguaMin,aguaMax);
-    uniform_int_distribution<int> randNutrientes(nutriMin,nutriMax);
 
-    agua = randAgua(gen);
-    nutrientes = randNutrientes(gen);
+#include "Rand.h"
+
+BocadoDoSolo::BocadoDoSolo(const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax)
+: planta(nullptr), jardineiro(nullptr)
+{
+    agua = Rand::generate(aguaMin,aguaMax) ;
+    nutrientes = Rand::generate(nutriMin,nutriMax);
 }
-BocadoDoSolo::~BocadoDoSolo() {
-    delete planta;
-    delete jardineiro;
-}
-void BocadoDoSolo::iterate(const int instante) {
+BocadoDoSolo::~BocadoDoSolo() = default;
+
+Jardim::codeIt BocadoDoSolo::iterate(const int instante) {
     if (planta != nullptr) {
         const auto temp = planta->pasaInstante(agua,nutrientes,instante);
         if (temp != -1) {
             feedFromDeadPlant(temp);
-            planta = nullptr;
-            return;
+            planta = nullptr; // Se a planta morrer
+            return Jardim::DEAD;
         }
         if (planta->verificaExpansão(agua,nutrientes)) {
-
+            return Jardim::EXPAND;
         }
+        return Jardim::ALIVE;
     }
+    return Jardim::NONE;
 }
 int BocadoDoSolo::aguaDada(const int percentagem) {
     // Verifica se vai subtrair até ficar menor a 0 (não devia mas ok)
@@ -47,6 +45,17 @@ int BocadoDoSolo::nutrientesPerdidos(const int unidades) {
 }
 void BocadoDoSolo::feedFromDeadPlant(int nutrientes) {
     nutrientes += nutrientes;
+}
+char BocadoDoSolo::getIdFromPlant() const {
+    if (planta!= nullptr)
+        return planta->getId();
+    return 'n';
+}
+bool BocadoDoSolo::newPlant(const char type) {
+    if (planta != nullptr)
+        return false;
+    planta = Planta::createPlant(type);
+    return true;
 }
 
 

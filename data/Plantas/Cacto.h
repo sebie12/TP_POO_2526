@@ -28,7 +28,7 @@ public:
     int pasaInstante(int agua, int nutrientes, int instante) override;
 
     bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
-    bool verificaExpansão(int agua, int nutrientes, int instanteAtual) override;
+    bool verificaExpansão(int agua, int nutrientes) override;
 };
 
 
