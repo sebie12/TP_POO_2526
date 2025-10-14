@@ -29,14 +29,15 @@ Jardim::codeIt BocadoDoSolo::iterate(const int instante) {
     }
     return Jardim::NONE;
 }
-int BocadoDoSolo::aguaDada(const int percentagem) {
+int BocadoDoSolo::perdeAgua(const int unidades) {
     // Verifica se vai subtrair até ficar menor a 0 (não devia mas ok)
-    const auto valor = agua - agua * percentagem < 0 ? agua : agua - agua * percentagem;
+    const auto valor = agua - unidades < 0 ? agua : agua - unidades;
     if (agua > 0)
         agua -= valor;
     return valor;
 }
-int BocadoDoSolo::nutrientesPerdidos(const int unidades) {
+
+int BocadoDoSolo::perdeNutrientes(const int unidades) {
     // Verifica se vai subtrair até ficar menor a 0
     const auto valor = nutrientes - unidades <= 0 ? nutrientes : nutrientes - unidades;
     if (nutrientes > 0)
@@ -58,6 +59,13 @@ bool BocadoDoSolo::newPlant(const char type) {
     return true;
 }
 
+int BocadoDoSolo::getAgua() const {
+    return agua;
+}
+
+int BocadoDoSolo::getNutrientes() const {
+    return nutrientes;
+}
 
 
 

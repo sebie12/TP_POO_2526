@@ -19,11 +19,16 @@ public:
     BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~BocadoDoSolo();
     Jardim::codeIt iterate(int instante);
-    int aguaDada(int percentagem);
-    int nutrientesPerdidos(int unidades);
     static void feedFromDeadPlant(int nutrientes);
+
+    int perdeAgua(int unidades);
+    int perdeNutrientes(int unidades);
+
     char getIdFromPlant()const;
     bool newPlant(char type);
+
+    int getAgua()const;
+    int getNutrientes()const;
 };
 
 

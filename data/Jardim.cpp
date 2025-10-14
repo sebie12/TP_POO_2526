@@ -28,7 +28,7 @@ Jardim::~Jardim() {
 void Jardim::iterate(const int instante) const {
     for (int i = 0; i < nLines; i++) {
         for (int j = 0; j < nCols; j++) {
-            area[i][j]->iterate(instante);
+            processaCambio(area[i][j]->iterate(instante), i, j);
         }
     }
 }

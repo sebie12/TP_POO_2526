@@ -3,15 +3,17 @@
 //
 #include <cmath>
 #include "Cacto.h"
-Cacto::Cacto() : Planta() {}
+Cacto::Cacto(BocadoDoSolo * sitio) : Planta(sitio,0,0){}
+Cacto::~Cacto() = default;
 
 char Cacto::getId()const {
     return id;
 }
 int Cacto::pasaInstante(const int agua, const int nutrientes, const int instante) {
     if (verificaMorte(agua, nutrientes, instante)) {
-        return nutrientes;
+        return getNutrientes();
     }
+    alimentar(agua, nutrientes);
     return -1; // Planta está viva
 }
 bool Cacto::verificaMorte(const int agua, const int nutrientes, const int instanteAtual) {
@@ -38,5 +40,9 @@ bool Cacto::verificaMorte(const int agua, const int nutrientes, const int instan
 bool Cacto::verificaExpansão(const int agua, const int nutrientes) {
     return agua >= multiplica_agua_maior && nutrientes >= multiplica_nutrientes_maior;
 }
+void Cacto::alimentar() {
+
+}
+
 
 

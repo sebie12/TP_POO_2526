@@ -10,13 +10,13 @@
 #include "Plantas/Erva.h"
 #include "Plantas/Roseira.h"
 
-Planta::Planta() : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), lastInstanceExpansion(-1), agua(0), nutrientes(0){
+Planta::Planta(BocadoDoSolo * sitio,const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), lastInstanceExpansion(-1), aguaAtual(agua), nutriAtual(nutrientes), solo(sitio){
 }
 
-std::unique_ptr<Planta> Planta::createPlant(const char type) {
+std::unique_ptr<Planta> Planta::createPlant(BocadoDoSolo * sitio, const char type) {
     switch (type) {
         case 'c':
-            return std::make_unique<Cacto>();
+            return std::make_unique<Cacto>(sitio);
         case 'e':
             return std::make_unique<Erva>();
         case 'r':
@@ -26,6 +26,31 @@ std::unique_ptr<Planta> Planta::createPlant(const char type) {
     }
 }
 
+int Planta::tirarAgua(const int agua) const {
+    int temp = solo->perdeAgua(agua);
+    agua += temp;
+    return temp;
+}
+int Planta::tirarNutrientes(const int nutrientes) const {
+    int temp = solo->perdeNutrientes(nutrientes);
+    nutrientes += temp;
+    return temp;
+}
+
+int Planta::getAguaSolo() const {
+    return solo->getAgua();
+}
+int Planta::getNutrientesSolo() const {
+    return solo->getNutrientes();
+}
+
+
+int Planta::getAgua() const {
+    return aguaAtual;
+}
+int Planta::getNutrientes() const {
+    return nutriAtual;
+}
 
 int Planta::getLastInstanceNoWater() const {
     return lastInstanceNoWater;

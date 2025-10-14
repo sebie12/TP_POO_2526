@@ -20,15 +20,17 @@ class Cacto final : public Planta{
     static constexpr int multiplica_agua_maior = Settings::Cacto::multiplica_agua_maior;
     static constexpr int absorcao_nutrientes = Settings::Cacto::absorcao_nutrientes;
     static constexpr int multiplica_nutrientes_maior = Settings::Cacto::multiplica_nutrientes_maior;
+
     // ------------------
 public:
-    Cacto();
-    ~Cacto();
+    explicit Cacto(BocadoDoSolo*sitio);
+    ~Cacto() override;
     char getId() const override;
     int pasaInstante(int agua, int nutrientes, int instante) override;
 
     bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
     bool verificaExpansão(int agua, int nutrientes) override;
+    void alimentar() override;
 };
 
 
