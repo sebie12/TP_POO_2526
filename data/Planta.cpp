@@ -9,7 +9,8 @@
 #include "Plantas/Cacto.h"
 #include "Plantas/Erva.h"
 #include "Plantas/Roseira.h"
-
+class Cacto;
+class Erva;
 Planta::Planta(BocadoDoSolo * sitio,const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), lastInstanceExpansion(-1), aguaAtual(agua), nutriAtual(nutrientes), solo(sitio){
 }
 
@@ -18,22 +19,20 @@ std::unique_ptr<Planta> Planta::createPlant(BocadoDoSolo * sitio, const char typ
         case 'c':
             return std::make_unique<Cacto>(sitio);
         case 'e':
-            return std::make_unique<Erva>();
-        case 'r':
-            return std::make_unique<Roseira>();
+            return std::make_unique<Erva>(sitio);
         default:
             return nullptr;
     }
 }
 
-int Planta::tirarAgua(const int agua) const {
-    int temp = solo->perdeAgua(agua);
-    agua += temp;
+int Planta::tirarAgua(const int agua) {
+    const int temp = solo->perdeAgua(agua);
+    aguaAtual += temp;
     return temp;
 }
-int Planta::tirarNutrientes(const int nutrientes) const {
-    int temp = solo->perdeNutrientes(nutrientes);
-    nutrientes += temp;
+int Planta::tirarNutrientes(const int nutrientes) {
+    const int temp = solo->perdeNutrientes(nutrientes);
+    nutriAtual += temp;
     return temp;
 }
 
@@ -64,3 +63,4 @@ int Planta::getLastInstanceNoNutri() const {
 void Planta::setLastIntanceNoNutri(const int n) {
     lastInstanceNoNutri = n;
 }
+

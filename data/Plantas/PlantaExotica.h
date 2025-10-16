@@ -7,7 +7,7 @@
 #include "data/Planta.h"
 
 
-class PlantaExotica : public Planta{
+class PlantaExotica{
 };
 
 

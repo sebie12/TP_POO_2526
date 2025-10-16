@@ -4,13 +4,17 @@
 
 #include "Erva.h"
 
-Erva::Erva(): Planta(inicial_agua, inicial_nutrientes), instanteNascimento(-1){}
+Erva::Erva(BocadoDoSolo * sitio): Planta(sitio,0,0) {
+    instanteNascimento = -1;
+}
+Erva::~Erva() = default;
 
-int Erva::pasaInstante(const int agua, const int nutrientes, const int instante) {
-    if (verificaMorte(agua, nutrientes, instante)) {
+
+int Erva::pasaInstante(const int instante) {
+    if (verificaMorte(getAguaSolo(), getNutrientesSolo(), instante)) {
         return getNutrientes();
     }
-    alimentar(agua, nutrientes);
+    alimentar();
     return -1; // Planta está viva
 }
 
@@ -21,9 +25,14 @@ bool Erva::verificaMorte(int agua, int nutrientes, const int instanteAtual) {
 }
 
 bool Erva::verificaExpansão(int agua, int nutrientes) {
-
+    return false;
 }
 
 char Erva::getId() const {
-
+    return id;
 }
+
+std::array<int, 2> Erva::alimentar() {
+    return {1 ,1};
+}
+

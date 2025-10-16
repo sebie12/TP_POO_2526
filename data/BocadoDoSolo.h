@@ -4,31 +4,37 @@
 
 #ifndef TP_POO_2526_BOCADODOSOLO_H
 #define TP_POO_2526_BOCADODOSOLO_H
-#include <random>
 
+#include <memory>
 #include "Jardim.h"
 #include "Planta.h"
 #include "Interativos/Jardineiro.h"
-using namespace std;
+#include "Interativos/Ferramenta.h"
+
+class Jardim;
+class Planta;
 
 class BocadoDoSolo {
-    unique_ptr<Planta> planta;
-    shared_ptr<Planta> jardineiro;
+    std::unique_ptr<Planta> planta;
+    std::shared_ptr<Jardineiro> jardineiro;
+    std::unique_ptr<Ferramenta> ferramenta;
     int agua, nutrientes;
 public:
     BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~BocadoDoSolo();
-    Jardim::codeIt iterate(int instante);
-    static void feedFromDeadPlant(int nutrientes);
+    int iterate(int instante);
+    void feedFromDeadPlant(int nutrientes);
 
     int perdeAgua(int unidades);
     int perdeNutrientes(int unidades);
 
-    char getIdFromPlant()const;
     bool newPlant(char type);
 
     int getAgua()const;
     int getNutrientes()const;
+
+    char getIdFromPlant()const;
+    char getIdForPrint()const;
 };
 
 

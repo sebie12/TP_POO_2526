@@ -14,9 +14,9 @@ BocadoDoSolo::BocadoDoSolo(const int aguaMin, const int aguaMax, const int nutri
 }
 BocadoDoSolo::~BocadoDoSolo() = default;
 
-Jardim::codeIt BocadoDoSolo::iterate(const int instante) {
+int BocadoDoSolo::iterate(const int instante) {
     if (planta != nullptr) {
-        const auto temp = planta->pasaInstante(agua,nutrientes,instante);
+        const auto temp = planta->pasaInstante(instante);
         if (temp != -1) {
             feedFromDeadPlant(temp);
             planta = nullptr; // Se a planta morrer
@@ -45,7 +45,7 @@ int BocadoDoSolo::perdeNutrientes(const int unidades) {
     return valor;
 }
 void BocadoDoSolo::feedFromDeadPlant(int nutrientes) {
-    nutrientes += nutrientes;
+    this->nutrientes += nutrientes;
 }
 char BocadoDoSolo::getIdFromPlant() const {
     if (planta!= nullptr)
@@ -55,7 +55,7 @@ char BocadoDoSolo::getIdFromPlant() const {
 bool BocadoDoSolo::newPlant(const char type) {
     if (planta != nullptr)
         return false;
-    planta = Planta::createPlant(type);
+    planta = Planta::createPlant(this,type);
     return true;
 }
 
@@ -67,5 +67,17 @@ int BocadoDoSolo::getNutrientes() const {
     return nutrientes;
 }
 
+char BocadoDoSolo::getIdForPrint() const {
+    if (jardineiro!=nullptr) {
+        return 'j';
+
+    }else if (planta != nullptr) {
+        return getIdFromPlant();
+    }
+    else if(ferramenta != nullptr) {
+        return 'f';
+    }
+    return ' ';
+}
 
 

@@ -5,9 +5,8 @@
 #ifndef TP_POO_2526_ERVA_H
 #define TP_POO_2526_ERVA_H
 #include "Settings.h"
-#include "Settings.h"
-#include "Settings.h"
 #include "data/Planta.h"
+#include "../BocadoDoSolo.h"
 
 
 class Erva : public Planta{
@@ -25,11 +24,13 @@ class Erva : public Planta{
     int instanteNascimento{};
     // ------------------
 public:
-    Erva();
+    explicit Erva(BocadoDoSolo * sitio);
+    ~Erva() override;
     char getId() const override;
-    int pasaInstante(int agua, int nutrientes, int instante) override;
+    int pasaInstante(int instante) override;
     bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
     bool verificaExpansão(int agua, int nutrientes) override;
+    std::array<int, 2> alimentar();
 };
 
 

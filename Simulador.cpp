@@ -3,7 +3,7 @@
 //
 
 #include "Simulador.h"
-Simulador::Simulador() {
+Simulador::Simulador(int n1, int n2) : jardim(new Jardim(n1,n2)) {
     instante = 0;
 }
 
@@ -11,6 +11,6 @@ void Simulador::Run() {
 
 }
 
-void Simulador::readCommand(const string& comm) {
+void Simulador::readCommand(const std::string& comm) {
 
 }

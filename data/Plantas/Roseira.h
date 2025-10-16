@@ -24,7 +24,12 @@ class Roseira : public Planta{
     static const int original_agua_percentagem = Settings::Roseira::original_agua_percentagem;
     // ------------------
 public:
-    Roseira(): Planta(Settings::Roseira::absorcao_nutrientes, Settings::Roseira::multiplica_nutrientes_maior){}
+    explicit Roseira(BocadoDoSolo * sitio) : Planta(sitio,0,0){}
+    int pasaInstante(int instante) override; // virtual pq vai ser mudada em cada filho
+    bool verificaMorte(int agua, int nutrientes, int nInstantes) override;
+    bool verificaExpansão(int agua, int nutrientes) override; // Verifica se a planta vai se expandir num bocado vizinho
+    char getId() const override;
+    std::array<int, 2> alimentar()override;
 };
 
 

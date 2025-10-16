@@ -4,11 +4,12 @@
 
 #ifndef TP_POO_2526_JARDIM_H
 #define TP_POO_2526_JARDIM_H
-#include <memory>
 
+#include <sstream>
 #include "BocadoDoSolo.h"
 #include "Settings.h"
 
+class BocadoDoSolo;
 
 class Jardim {
     int nLines;
@@ -22,17 +23,21 @@ class Jardim {
     // Matrix para os "bocados do solo"
 public:
     enum codeIt {
-        EXPAND,
-        DEAD,
-        ALIVE,
-        NONE
+        EXPAND = 0,
+        DEAD = 1,
+        ALIVE = 2,
+        NONE = 3
     };
     Jardim(int linhas, int colunas);
     ~Jardim();
     void iterate(int instante) const;
-    void processaCambio(codeIt tipo, int linha, int col) const;
+    void processaCambio(int tipo, int linha, int col) const;
 
     void expand(int linha, int col) const;
+
+    std::string printJardim() const;
+
+    void genRandPlants()const;
 };
 
 

@@ -8,13 +8,16 @@
 
 
 class Simulador {
-    Jardim jardim;
+    Jardim *jardim;
     int instante;
     // Define on instante atual
 public:
     Simulador();
+
+    Simulador(int n1, int n2);
+
     void Run();
-    void readCommand(const string& comm);
+    void readCommand(const std::string& comm);
 };
 
 

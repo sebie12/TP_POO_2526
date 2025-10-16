@@ -3,7 +3,8 @@
 //
 
 #include "Jardim.h"
-
+#include "Rand.h"
+using namespace std;
 Jardim::Jardim(const int linhas, const int colunas) {
     nLines = linhas;
     nCols = colunas;
@@ -32,7 +33,7 @@ void Jardim::iterate(const int instante) const {
         }
     }
 }
-void Jardim::processaCambio(const codeIt tipo, const int linha, const int col) const {
+void Jardim::processaCambio(const int tipo, const int linha, const int col) const {
     switch (tipo) {
         case Jardim::EXPAND:
             expand(linha, col);
@@ -69,5 +70,34 @@ void Jardim::expand(const int linha, const int col) const {
             return;
     }
 }
+string Jardim::printJardim() const {
+    ostringstream oss;
+    for (int i = 0; i < nLines; i++) {
+        for (int j = 0; j < nCols; j++) {
+            oss << area[nLines][nCols]->getIdForPrint() << ' ';
+        }
+        oss << endl;
+    }
+    return oss.str();
+}
+void Jardim::genRandPlants() const {
+    for (int i = 0; i < nLines; i++) {
+        for (int j = 0; j < nCols; j++) {
+            switch (Rand::generate(0, 3)) {
+                case 0:
+                    area[nLines][nCols]->newPlant(Planta::plantTypes::CACTO);
+                    break;
+                case 1:
+                    area[nLines][nCols]->newPlant(Planta::plantTypes::ERVA);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+}
+
+
 
 

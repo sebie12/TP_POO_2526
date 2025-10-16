@@ -5,9 +5,9 @@
 #ifndef TP_POO_2526_CACTO_H
 #define TP_POO_2526_CACTO_H
 #include "Cacto.h"
-#include "Cacto.h"
 #include "Settings.h"
 #include "data/Planta.h"
+#include "array"
 
 
 class Cacto final : public Planta{
@@ -26,11 +26,12 @@ public:
     explicit Cacto(BocadoDoSolo*sitio);
     ~Cacto() override;
     char getId() const override;
-    int pasaInstante(int agua, int nutrientes, int instante) override;
+    int pasaInstante(int instante) override;
 
     bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
     bool verificaExpansão(int agua, int nutrientes) override;
-    void alimentar() override;
+
+   std::array<int, 2> alimentar() override;
 };
 
 
