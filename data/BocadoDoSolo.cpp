@@ -3,8 +3,10 @@
 //
 
 #include "BocadoDoSolo.h"
-
+#include "sstream"
 #include "Rand.h"
+
+#include <iostream>
 
 BocadoDoSolo::BocadoDoSolo(const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax)
 : planta(nullptr), jardineiro(nullptr)
@@ -77,7 +79,19 @@ char BocadoDoSolo::getIdForPrint() const {
     else if(ferramenta != nullptr) {
         return 'f';
     }
-    return ' ';
+    return '+';
+}
+
+std::string BocadoDoSolo::toString() const {
+    std::ostringstream oss;
+    oss << "Agua: " << agua << " Nutrientes: " << nutrientes << "\n";
+    oss << "Planta: " << (planta != nullptr ? getIdFromPlant() : 'N') << "\n";
+    oss << planta->toString() << "\n";
+    oss << "Jardineiro: " << (jardineiro != nullptr ? 'Y' : 'N') << "\n";
+    oss << "Ferramenta: " << (ferramenta != nullptr ? 'Y' : 'N') << "\n";
+
+    return oss.str();
+
 }
 
 

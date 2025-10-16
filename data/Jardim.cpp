@@ -1,7 +1,7 @@
 //
 // Created by sebie on 07/10/2025.
 //
-
+#include <iostream>
 #include "Jardim.h"
 #include "Rand.h"
 using namespace std;
@@ -70,11 +70,18 @@ void Jardim::expand(const int linha, const int col) const {
             return;
     }
 }
-string Jardim::printJardim() const {
+std::string Jardim::getDataFromBocado(const int i, const int j) const { // Esta a dar coisa mala
+    if (area[i][j] == nullptr) {
+        return "Empty";
+    }
+    return area[i][j]->toString();
+}
+
+string Jardim::toString() const {
     ostringstream oss;
     for (int i = 0; i < nLines; i++) {
         for (int j = 0; j < nCols; j++) {
-            oss << area[nLines][nCols]->getIdForPrint() << ' ';
+            oss << area[i][j]->getIdForPrint() << ' ';
         }
         oss << endl;
     }
@@ -85,17 +92,17 @@ void Jardim::genRandPlants() const {
         for (int j = 0; j < nCols; j++) {
             switch (Rand::generate(0, 3)) {
                 case 0:
-                    area[nLines][nCols]->newPlant(Planta::plantTypes::CACTO);
+                    area[i][j]->newPlant(Planta::plantTypes::CACTO);
                     break;
                 case 1:
-                    area[nLines][nCols]->newPlant(Planta::plantTypes::ERVA);
+                    area[i][j]->newPlant(Planta::plantTypes::ERVA);
                     break;
                 default:
                     break;
             }
-
         }
     }
+
 }
 
 

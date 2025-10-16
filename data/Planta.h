@@ -48,6 +48,8 @@ class Planta {
 
     void setLastIntanceNoWater(int n);
     void setLastIntanceNoNutri(int n);
+
+    std::string toString() const;
 };
 
 

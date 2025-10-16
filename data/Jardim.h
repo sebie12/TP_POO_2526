@@ -32,12 +32,10 @@ public:
     ~Jardim();
     void iterate(int instante) const;
     void processaCambio(int tipo, int linha, int col) const;
-
     void expand(int linha, int col) const;
-
-    std::string printJardim() const;
-
+    std::string toString() const;
     void genRandPlants()const;
+    std::string getDataFromBocado(int i, int j) const;
 };
 
 

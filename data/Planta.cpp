@@ -5,7 +5,6 @@
 #include "Planta.h"
 
 #include <memory>
-
 #include "Plantas/Cacto.h"
 #include "Plantas/Erva.h"
 #include "Plantas/Roseira.h"
@@ -62,5 +61,10 @@ int Planta::getLastInstanceNoNutri() const {
 }
 void Planta::setLastIntanceNoNutri(const int n) {
     lastInstanceNoNutri = n;
+}
+std::string Planta::toString() const {
+    std::ostringstream oss;
+    oss << "Agua Absorbida: " << aguaAtual<< " Nutrientes absorbidos: " << nutriAtual << "\n";
+    return oss.str();
 }
 

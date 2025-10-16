@@ -3,6 +3,9 @@
 //
 #include <cmath>
 #include "Cacto.h"
+
+// EM PRINCIPIO ACABADO
+
 Cacto::Cacto(BocadoDoSolo * sitio) : Planta(sitio,0,0){}
 Cacto::~Cacto() = default;
 
@@ -11,6 +14,7 @@ char Cacto::getId()const {
 }
 int Cacto::pasaInstante(const int instante) {
     //const array<int,2> temp = alimentar(); // Primeira posição a agua absorbida, segunda nutrientes absorbidos
+    alimentar();
     if (verificaMorte(getAguaSolo(), getNutrientesSolo(), instante)) {
         return getNutrientes();
     }
@@ -21,8 +25,8 @@ bool Cacto::verificaMorte(const int agua, const int nutrientes, const int instan
     if (agua >= morre_agua_solo_maior) {
         if (getLastInstanceNoWater() == -1)
             setLastIntanceNoWater(instanteAtual);
-        else if (std::abs(instanteAtual - getLastInstanceNoWater()) >= morre_agua_solo_instantes)
-            return true; // Morto por falta de agua
+        else if (std::abs(instanteAtual - getLastInstanceNoWater()) >= morre_agua_solo_instantes){}
+            return true; // Morto por excesso de agua
     } else {
         setLastIntanceNoWater(-1);
     }
@@ -30,20 +34,23 @@ bool Cacto::verificaMorte(const int agua, const int nutrientes, const int instan
     if (nutrientes <= morre_nutrientes_solo_menor) {
         if (getLastInstanceNoNutri() == -1)
             setLastIntanceNoNutri(instanteAtual);
-        else if (std::abs(instanteAtual - getLastInstanceNoNutri()) >= morre_nutrientes_solo_menor)
+        else if (std::abs(instanteAtual - getLastInstanceNoNutri()) >= morre_nutrientes_solo_menor) {
             return true; // Morreu por falta de nutrientes
+        }
+
     } else {
         setLastIntanceNoNutri(-1);
     }
     return false; // Ainda vivo
 }
 bool Cacto::verificaExpansão(const int agua, const int nutrientes) {
-    return agua >= multiplica_agua_maior && nutrientes >= multiplica_nutrientes_maior;
+    return getAgua() >= multiplica_agua_maior && getNutrientes() >= multiplica_nutrientes_maior;
 }
 
 std::array<int, 2> Cacto::alimentar() {
+    const float temp = getAguaSolo() * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
     const std::array<int, 2> aguaEnutri =
-        {tirarAgua(getAguaSolo() * absorcao_agua_percentagem),
+        {tirarAgua(temp),
         tirarNutrientes(absorcao_nutrientes)};
 
     return aguaEnutri;

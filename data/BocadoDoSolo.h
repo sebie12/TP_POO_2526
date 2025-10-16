@@ -35,6 +35,8 @@ public:
 
     char getIdFromPlant()const;
     char getIdForPrint()const;
+
+    std::string toString()const;
 };
 
 
