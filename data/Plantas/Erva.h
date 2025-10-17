@@ -30,7 +30,7 @@ public:
     int pasaInstante(int instante) override;
     bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
     bool verificaExpansão(int agua, int nutrientes) override;
-    std::array<int, 2> alimentar();
+    std::array<int, 2> alimentar() override;
 };
 
 
