@@ -25,6 +25,7 @@ bool Erva::verificaMorte(int agua, int nutrientes, const int instanteAtual) {
 }
 
 bool Erva::verificaExpansão(int agua, int nutrientes) {
+    
     return false;
 }
 

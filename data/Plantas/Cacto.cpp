@@ -7,6 +7,7 @@
 // EM PRINCIPIO ACABADO
 
 Cacto::Cacto(BocadoDoSolo * sitio) : Planta(sitio,0,0){}
+Cacto::Cacto(BocadoDoSolo * sitio, const int agua, const int nutrientes): Planta(sitio,agua,nutrientes){}
 Cacto::~Cacto() = default;
 
 char Cacto::getId()const {
@@ -48,11 +49,10 @@ bool Cacto::verificaExpansão(const int agua, const int nutrientes) {
 }
 
 std::array<int, 2> Cacto::alimentar() {
-    const float temp = getAguaSolo() * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
+    const float temp = static_cast<float>(getAguaSolo()) * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
     const std::array<int, 2> aguaEnutri =
-        {tirarAgua(temp),
-        tirarNutrientes(absorcao_nutrientes)};
-
+        {tirarDoSoloAgua(static_cast<int>(temp)),
+        tirarDoSoloNutrientes(absorcao_nutrientes)};
     return aguaEnutri;
 }
 

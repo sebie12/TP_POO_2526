@@ -55,7 +55,7 @@ char BocadoDoSolo::getIdFromPlant() const {
     return 'n';
 }
 bool BocadoDoSolo::newPlant(const char type) {
-    if (planta != nullptr)
+    if (planta != nullptr && type != Planta::plantTypes::ERVA)
         return false;
     planta = Planta::createPlant(this,type);
     return true;
@@ -91,7 +91,20 @@ std::string BocadoDoSolo::toString() const {
     oss << "Ferramenta: " << (ferramenta != nullptr ? 'Y' : 'N') << "\n";
 
     return oss.str();
-
 }
+
+BocadoDoSolo *BocadoDoSolo::operator>>(BocadoDoSolo *outro) {
+    const int tempAgua = planta->getAgua() / 2;
+    const int tempNutrientes = planta->getNutrientes() / 2;
+
+    planta->perderAgua(tempAgua);
+    planta->perderNutri(tempNutrientes);
+
+    outro->planta->addAgua(tempAgua);
+    outro->planta->addNutrientes(tempNutrientes);
+
+    return this;
+}
+
 
 

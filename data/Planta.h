@@ -40,8 +40,12 @@ class Planta {
     int getAguaSolo()const;
     int getNutrientesSolo()const;
 
-    int tirarAgua(int agua);;
-    int tirarNutrientes(int nutrientes);
+    int tirarDoSoloAgua(int agua);;
+    int tirarDoSoloNutrientes(int nutrientes);
+    int addNutrientes(int nutrientes);
+    int addAgua(int agua);
+    int perderAgua(int agua);
+    int perderNutri(int nutri);
 
     int getLastInstanceNoWater() const;
     int getLastInstanceNoNutri() const;

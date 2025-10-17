@@ -6,6 +6,8 @@
 #include "Rand.h"
 using namespace std;
 Jardim::Jardim(const int linhas, const int colunas) {
+    if (linhas > 26 || colunas > 26)
+        throw "Invalid size"; // Placeholder
     nLines = linhas;
     nCols = colunas;
     area = new BocadoDoSolo**[linhas];
@@ -34,11 +36,8 @@ void Jardim::iterate(const int instante) const {
     }
 }
 void Jardim::processaCambio(const int tipo, const int linha, const int col) const {
-    switch (tipo) {
-        case Jardim::EXPAND:
+    if (tipo == Jardim::EXPAND)
             expand(linha, col);
-        default: ;
-    }
 }
 
 void Jardim::expand(const int linha, const int col) const {
@@ -60,8 +59,11 @@ void Jardim::expand(const int linha, const int col) const {
 
     for (const int i : directionsHorizontal) {
         const int vizinho = linha + i;
-        if (area[vizinho][col]->newPlant(tipo)) // Se a planta não for criada continua (retorna false nessa situação)
+        if (area[vizinho][col]->newPlant(tipo)) {
+            // Se a planta não for criada continua (retorna false nessa situação)
+            *area[linha][col]>>area[vizinho][col]; // Vai passar a metade da agua duma planta para a outra
             return;
+        }
     }
 
     for (const int i : directionsVertical) {

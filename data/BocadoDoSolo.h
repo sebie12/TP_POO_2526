@@ -37,6 +37,8 @@ public:
     char getIdForPrint()const;
 
     std::string toString()const;
+
+    BocadoDoSolo* operator>>(BocadoDoSolo* outro);
 };
 
 

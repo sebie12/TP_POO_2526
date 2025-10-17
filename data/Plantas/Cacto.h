@@ -24,6 +24,7 @@ class Cacto final : public Planta{
     // ------------------
 public:
     explicit Cacto(BocadoDoSolo*sitio);
+    explicit Cacto(BocadoDoSolo*sitio, int agua, int nutrientes);
     ~Cacto() override;
     char getId() const override;
     int pasaInstante(int instante) override;
