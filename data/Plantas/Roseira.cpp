@@ -20,13 +20,13 @@ std::array<int, 2> Roseira::alimentar() {
 }
 
 bool Roseira::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
-    if (getNutrientes() > multiplica_nutrientes_maior) {
-
-    }
-    return false;
+    return getNutrientes() > multiplica_nutrientes_maior;
 }
 bool Roseira::verificaMorte(int agua, int nutrientes, int nInstantes) {
-
+    if (getAgua() <= morre_agua_menor || getNutrientes() <= morre_nutrientes_menor || getNutrientes() >= morre_nutrientes_menor) {
+        return true;
+    }
+    return false;
 }
 
 

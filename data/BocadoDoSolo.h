@@ -15,20 +15,23 @@ class Jardim;
 class Planta;
 
 class BocadoDoSolo {
+    Jardim * jardim;
     std::unique_ptr<Planta> planta;
     std::shared_ptr<Jardineiro> jardineiro;
     std::unique_ptr<Ferramenta> ferramenta;
     int agua, nutrientes;
 public:
-    BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
+    BocadoDoSolo(Jardim * jardim,int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~BocadoDoSolo();
     int iterate(int instante);
-    void feedFromDeadPlant(int nutri);
+    void feedFromDeadPlant(int aguaDaPlanta, int nutriDaPlanta);
+    void killPlanta();
 
     int perdeAgua(int unidades);
     int perdeNutrientes(int unidades);
 
     bool newPlant(char type);
+    bool hasPlant()const;
 
     int getAgua()const;
     int getNutrientes()const;

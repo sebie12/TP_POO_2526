@@ -8,8 +8,8 @@
 
 #include <iostream>
 
-BocadoDoSolo::BocadoDoSolo(const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax)
-: planta(nullptr), jardineiro(nullptr)
+BocadoDoSolo::BocadoDoSolo(Jardim*jardim, const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax)
+: jardim(jardim), planta(nullptr), jardineiro(nullptr)
 {
     agua = Rand::generate(aguaMin,aguaMax) ;
     nutrientes = Rand::generate(nutriMin,nutriMax);
@@ -20,8 +20,7 @@ int BocadoDoSolo::iterate(const int instante) {
     if (planta != nullptr) {
         const auto temp = planta->pasaInstante(instante);
         if (temp != -1) {
-            feedFromDeadPlant(temp);
-            planta = nullptr; // Se a planta morrer
+            killPlanta();// Se a planta morrer
             return Jardim::DEAD;
         }
         if (planta->verificaExpansao(agua, nutrientes, instante)) {
@@ -46,8 +45,14 @@ int BocadoDoSolo::perdeNutrientes(const int unidades) {
         nutrientes = valor;
     return valor;
 }
-void BocadoDoSolo::feedFromDeadPlant(const int nutri) {
-    this->nutrientes += nutri;
+void BocadoDoSolo::feedFromDeadPlant(const int aguaDaPlanta, const int nutriDaPlanta) {
+    if (planta->getId() == Planta::CACTO) {
+        this->nutrientes += nutriDaPlanta;
+    }
+    else if (planta->getId() == Planta::ROSEIRA) {
+        this->agua += aguaDaPlanta/2;
+        this->nutrientes += nutriDaPlanta/2;
+    }
 }
 char BocadoDoSolo::getIdFromPlant() const {
     if (planta!= nullptr)
@@ -60,6 +65,11 @@ bool BocadoDoSolo::newPlant(const char type) {
     planta = Planta::createPlant(this,type);
     return true;
 }
+
+bool BocadoDoSolo::hasPlant() const {
+    return planta != nullptr;
+}
+
 
 int BocadoDoSolo::getAgua() const {
     return agua;
@@ -112,11 +122,12 @@ BocadoDoSolo *BocadoDoSolo::operator>>(BocadoDoSolo *outro) {
         planta->setNutri(Settings::Roseira::original_nutrientes);
         outro->planta->setNutri(Settings::Roseira::nova_nutrientes);
     }
-
-
-
-
     return this;
+}
+
+void BocadoDoSolo::killPlanta() {
+    planta = nullptr;
+    feedFromDeadPlant(planta->getAgua(), planta->getNutrientes());
 }
 
 

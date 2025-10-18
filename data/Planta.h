@@ -17,7 +17,6 @@ class Planta {
  public:
     Planta(BocadoDoSolo* sitio,int agua, int nutrientes);
     virtual ~Planta() = default;
-
     enum plantTypes{
         CACTO = 'c',
         ERVA = 'e',

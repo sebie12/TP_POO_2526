@@ -25,6 +25,7 @@ class Roseira : public Planta{
     static constexpr int original_nutrientes = Settings::Roseira::original_nutrientes;
     static constexpr int original_agua_percentagem = Settings::Roseira::original_agua_percentagem;
 
+
     // ------------------
 public:
     explicit Roseira(BocadoDoSolo * sitio);

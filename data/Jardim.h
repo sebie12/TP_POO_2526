@@ -26,7 +26,8 @@ public:
         EXPAND = 0,
         DEAD = 1,
         ALIVE = 2,
-        NONE = 3
+        ROSEIRAVIZINHOS = 3,
+        NONE = 4
     };
     Jardim(int linhas, int colunas);
     ~Jardim();
@@ -36,6 +37,8 @@ public:
     std::string toString() const;
     void genRandPlants()const;
     std::string getDataFromBocado(int i, int j) const;
+    bool hasFullViznhos(int linha, int coluna);
+    std::array<int, 4> verificaLimites(int linha, int col) const;
 };
 
 
