@@ -28,11 +28,9 @@ public:
     ~Cacto() override;
     char getId() const override;
     int pasaInstante(int instante) override;
-
     bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
-    bool verificaExpansão(int agua, int nutrientes) override;
-
-   std::array<int, 2> alimentar() override;
+    bool verificaExpansao(int agua, int nutrientes, int instanteAtual) override;
+    std::array<int, 2> alimentar() override;
 };
 
 

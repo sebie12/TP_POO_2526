@@ -11,7 +11,7 @@
 class Planta;
 class Cacto;
 class Erva;
-Planta::Planta(BocadoDoSolo * sitio,const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), lastInstanceExpansion(-1), aguaAtual(agua), nutriAtual(nutrientes), solo(sitio){
+Planta::Planta(BocadoDoSolo * sitio,const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), aguaAtual(agua), nutriAtual(nutrientes), solo(sitio){
 }
 
 std::unique_ptr<Planta> Planta::createPlant(BocadoDoSolo * sitio, const char type) {
@@ -52,7 +52,7 @@ int Planta::addNutrientes(const int nutrientes ) {
 int Planta::perderAgua(const int agua) {
     if (agua<0)
         return 0;
-    aguaAtual - = agua;
+    aguaAtual -= agua;
     return agua;
 }
 
@@ -61,6 +61,14 @@ int Planta::perderNutri(const int nutri) {
         return 0;
     nutriAtual -= nutri;
     return nutri;
+}
+
+void Planta::setAgua(const int agua) {
+    aguaAtual = agua;
+}
+
+void Planta::setNutri(const int nutri) {
+    nutriAtual = nutri;
 }
 
 

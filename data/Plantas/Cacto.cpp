@@ -44,9 +44,12 @@ bool Cacto::verificaMorte(const int agua, const int nutrientes, const int instan
     }
     return false; // Ainda vivo
 }
-bool Cacto::verificaExpansão(const int agua, const int nutrientes) {
+
+bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
     return getAgua() >= multiplica_agua_maior && getNutrientes() >= multiplica_nutrientes_maior;
 }
+
+
 
 std::array<int, 2> Cacto::alimentar() {
     const float temp = static_cast<float>(getAguaSolo()) * (static_cast<float>(100 - absorcao_agua_percentagem)/100);

@@ -23,7 +23,7 @@ public:
     BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~BocadoDoSolo();
     int iterate(int instante);
-    void feedFromDeadPlant(int nutrientes);
+    void feedFromDeadPlant(int nutri);
 
     int perdeAgua(int unidades);
     int perdeNutrientes(int unidades);

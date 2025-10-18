@@ -24,7 +24,7 @@ int BocadoDoSolo::iterate(const int instante) {
             planta = nullptr; // Se a planta morrer
             return Jardim::DEAD;
         }
-        if (planta->verificaExpansão(agua,nutrientes)) {
+        if (planta->verificaExpansao(agua, nutrientes, instante)) {
             return Jardim::EXPAND;
         }
         return Jardim::ALIVE;
@@ -46,8 +46,8 @@ int BocadoDoSolo::perdeNutrientes(const int unidades) {
         nutrientes = valor;
     return valor;
 }
-void BocadoDoSolo::feedFromDeadPlant(int nutrientes) {
-    this->nutrientes += nutrientes;
+void BocadoDoSolo::feedFromDeadPlant(const int nutri) {
+    this->nutrientes += nutri;
 }
 char BocadoDoSolo::getIdFromPlant() const {
     if (planta!= nullptr)
@@ -97,11 +97,24 @@ BocadoDoSolo *BocadoDoSolo::operator>>(BocadoDoSolo *outro) {
     const int tempAgua = planta->getAgua() / 2;
     const int tempNutrientes = planta->getNutrientes() / 2;
 
-    planta->perderAgua(tempAgua);
-    planta->perderNutri(tempNutrientes);
 
-    outro->planta->addAgua(tempAgua);
-    outro->planta->addNutrientes(tempNutrientes);
+    if (planta->getId() == Planta::CACTO) {
+        planta->perderAgua(tempAgua);
+        outro->planta->addAgua(tempAgua);
+
+        planta->perderNutri(tempNutrientes);
+        outro->planta->addNutrientes(tempNutrientes);
+    }
+    else if (planta->getId() == Planta::ROSEIRA) {
+        planta->perderAgua(tempAgua);
+        outro->planta->setAgua(tempAgua);
+
+        planta->setNutri(Settings::Roseira::original_nutrientes);
+        outro->planta->setNutri(Settings::Roseira::nova_nutrientes);
+    }
+
+
+
 
     return this;
 }

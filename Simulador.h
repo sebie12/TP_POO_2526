@@ -13,11 +13,12 @@ class Simulador {
     // Define on instante atual
 public:
     Simulador();
-
+    ~Simulador();
     Simulador(int n1, int n2);
 
     void Run();
     void readCommand(const std::string& comm);
+
 };
 
 

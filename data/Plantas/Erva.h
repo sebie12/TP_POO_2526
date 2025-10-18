@@ -21,7 +21,7 @@ class Erva : public Planta{
     static constexpr int absorcao_nutrientes = Settings::ErvaDaninha::absorcao_nutrientes;
     static constexpr int multiplica_nutrientes_maior = Settings::ErvaDaninha::multiplica_nutrientes_maior;
 
-    int instanteNascimento{};
+    int instanteNascimento{}, ultimaExpansao;
     // ------------------
 public:
     explicit Erva(BocadoDoSolo * sitio);
@@ -29,7 +29,7 @@ public:
     char getId() const override;
     int pasaInstante(int instante) override;
     bool verificaMorte(int agua, int nutrientes, int instanteAtual) override;
-    bool verificaExpansão(int agua, int nutrientes) override;
+    bool verificaExpansao(int agua, int nutrientes, int instanteAtual) override;
     std::array<int, 2> alimentar() override;
 };
 

@@ -11,7 +11,7 @@
 class BocadoDoSolo;
 
 class Planta {
-    int lastInstanceNoWater, lastInstanceNoNutri, lastInstanceExpansion;
+    int lastInstanceNoWater, lastInstanceNoNutri;
     int aguaAtual, nutriAtual;
     BocadoDoSolo*solo;
  public:
@@ -29,7 +29,7 @@ class Planta {
 
     virtual int pasaInstante(int instante) = 0; // virtual pq vai ser mudada em cada filho
     virtual bool verificaMorte(int agua, int nutrientes, int nInstantes) = 0;
-    virtual bool verificaExpansão(int agua, int nutrientes) = 0; // Verifica se a planta vai se expandir num bocado vizinho
+    virtual bool verificaExpansao(int agua, int nutrientes, int instanteAtual) = 0; // Verifica se a planta vai se expandir num bocado vizinho
     virtual char getId() const = 0;
     virtual std::array<int, 2> alimentar() = 0;
     // acabam as virtuais
@@ -46,6 +46,8 @@ class Planta {
     int addAgua(int agua);
     int perderAgua(int agua);
     int perderNutri(int nutri);
+    void setAgua(int agua);
+    void setNutri(int nutri);
 
     int getLastInstanceNoWater() const;
     int getLastInstanceNoNutri() const;

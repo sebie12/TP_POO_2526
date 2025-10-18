@@ -4,11 +4,11 @@
 
 #include "Erva.h"
 
-Erva::Erva(BocadoDoSolo * sitio): Planta(sitio,0,0) {
+Erva::Erva(BocadoDoSolo * sitio): Planta(sitio,inicial_agua,inicial_nutrientes) {
     instanteNascimento = -1;
+    ultimaExpansao = 0;
 }
 Erva::~Erva() = default;
-
 
 int Erva::pasaInstante(const int instante) {
     if (verificaMorte(getAguaSolo(), getNutrientesSolo(), instante)) {
@@ -21,11 +21,14 @@ int Erva::pasaInstante(const int instante) {
 bool Erva::verificaMorte(int agua, int nutrientes, const int instanteAtual) {
     if (instanteNascimento == -1) // está a -1 quando é criado
         instanteNascimento = instanteAtual; // Define o seu instante de nascimento
-    return instanteAtual - instanteNascimento == 60; // se a diferença é igual 60 (se tem 60 instantes vivo) morre
+    return instanteAtual - instanteNascimento == morre_instantes ; // se a diferença é igual 60 (se tem 60 instantes vivo) morre
 }
 
-bool Erva::verificaExpansão(int agua, int nutrientes) {
-    
+bool Erva::verificaExpansao(int agua, int nutrientes, const int instanteAtual) {
+    if (getNutrientes() > multiplica_nutrientes_maior && (instanteAtual - ultimaExpansao) >= multiplica_instantes) {
+        ultimaExpansao = instanteAtual;
+        return true;
+    }
     return false;
 }
 
@@ -34,6 +37,6 @@ char Erva::getId() const {
 }
 
 std::array<int, 2> Erva::alimentar() {
-    return {1 ,1};
+    return {perderAgua(absorcao_agua) ,perderNutri(absorcao_nutrientes)};
 }
 
