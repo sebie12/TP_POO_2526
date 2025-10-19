@@ -21,7 +21,7 @@ class BocadoDoSolo {
     std::unique_ptr<Ferramenta> ferramenta;
     int agua, nutrientes;
 public:
-    BocadoDoSolo(Jardim * jardim,int aguaMin, int aguaMax, int nutriMin, int nutriMax);
+    BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~BocadoDoSolo();
     int iterate(int instante);
     void feedFromDeadPlant(int aguaDaPlanta, int nutriDaPlanta);

@@ -8,8 +8,8 @@
 
 #include <iostream>
 
-BocadoDoSolo::BocadoDoSolo(Jardim*jardim, const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax)
-: jardim(jardim), planta(nullptr), jardineiro(nullptr)
+BocadoDoSolo::BocadoDoSolo( const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax)
+: planta(nullptr), jardineiro(nullptr)
 {
     agua = Rand::generate(aguaMin,aguaMax) ;
     nutrientes = Rand::generate(nutriMin,nutriMax);
@@ -22,6 +22,9 @@ int BocadoDoSolo::iterate(const int instante) {
         if (temp != -1) {
             killPlanta();// Se a planta morrer
             return Jardim::DEAD;
+        }
+        if (planta->getId() == Planta::ROSEIRA) {
+            return Jardim::ROSEIRAVIZINHOS;
         }
         if (planta->verificaExpansao(agua, nutrientes, instante)) {
             return Jardim::EXPAND;
@@ -126,8 +129,8 @@ BocadoDoSolo *BocadoDoSolo::operator>>(BocadoDoSolo *outro) {
 }
 
 void BocadoDoSolo::killPlanta() {
-    planta = nullptr;
     feedFromDeadPlant(planta->getAgua(), planta->getNutrientes());
+    planta = nullptr;
 }
 
 

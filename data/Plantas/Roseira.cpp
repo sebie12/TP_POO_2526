@@ -9,8 +9,12 @@ char Roseira::getId() const {
     return id;
 }
 
-int Roseira::pasaInstante(int instante) {
-
+int Roseira::pasaInstante(const int instante) {
+    alimentar();
+    if (verificaMorte(instante)) {
+        return -1;
+    }
+    return 0;
 }
 std::array<int, 2> Roseira::alimentar() {
     const std::array<int, 2> aguaEnutri =
@@ -22,12 +26,13 @@ std::array<int, 2> Roseira::alimentar() {
 bool Roseira::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
     return getNutrientes() > multiplica_nutrientes_maior;
 }
-bool Roseira::verificaMorte(int agua, int nutrientes, int nInstantes) {
+bool Roseira::verificaMorte(int nInstantes) {
     if (getAgua() <= morre_agua_menor || getNutrientes() <= morre_nutrientes_menor || getNutrientes() >= morre_nutrientes_menor) {
         return true;
     }
     return false;
 }
+
 
 
 

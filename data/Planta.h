@@ -27,7 +27,7 @@ class Planta {
     static std::unique_ptr<Planta> createPlant(BocadoDoSolo * sitio, char type); // Função statica para a criação das plantas
 
     virtual int pasaInstante(int instante) = 0; // virtual pq vai ser mudada em cada filho
-    virtual bool verificaMorte(int agua, int nutrientes, int nInstantes) = 0;
+    virtual bool verificaMorte(int nInstantes) = 0;
     virtual bool verificaExpansao(int agua, int nutrientes, int instanteAtual) = 0; // Verifica se a planta vai se expandir num bocado vizinho
     virtual char getId() const = 0;
     virtual std::array<int, 2> alimentar() = 0;
