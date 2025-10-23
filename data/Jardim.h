@@ -27,13 +27,15 @@ public:
         DEAD = 1,
         ALIVE = 2,
         ROSEIRAVIZINHOS = 3,
-        NONE = 4
+        PLANTAEXOTICAEXPAND = 4,
+        NONE = 5
     };
     Jardim(int linhas, int colunas);
     ~Jardim();
     void iterate(int instante) const;
     void processaCambio(int tipo, int linha, int col) const;
     void expand(int linha, int col) const;
+    void expandPE(int linha, int col)const;
     std::string toString() const;
     void genRandPlants()const;
     std::string getDataFromBocado(int i, int j) const;

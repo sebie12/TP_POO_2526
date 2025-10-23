@@ -42,6 +42,9 @@ void Jardim::processaCambio(const int tipo, const int linha, const int col) cons
         if (hasFullViznhos(linha, col))
             area[linha][col]->killPlanta();
     }
+    else if (tipo == Jardim::PLANTAEXOTICAEXPAND) {
+
+    }
 }
 
 std::array<int, 4> Jardim::verificaLimites(const int linha, const int col) const {
@@ -77,6 +80,19 @@ void Jardim::expand(const int linha, const int col) const {
     }
 
 }
+void Jardim::expandPE(const int linha, const int col) const {
+    constexpr char tipo = Planta::RAIZPE;
+    const auto directions = verificaLimites(linha, col); // left right up down
+
+    const int random = Rand::generate(0, 3);
+
+    const int linhaNova = random < 2 ? linha + directions[random] : linha;
+    const int colunaNova = random < 2 ? col : col + directions[random];
+    if (!area[linhaNova][colunaNova]->hasPlant()) {
+        // Cria raiz
+    }
+}
+
 bool Jardim::hasFullViznhos(const int linha, const int col) const {
     const auto directions = verificaLimites(linha, col); // left right up down
     for (int i = 0; i < 4; i++) {

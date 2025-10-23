@@ -7,6 +7,7 @@
 #include <array>
 #include <memory>
 #include "BocadoDoSolo.h"
+#include "Plantas/RaizPlantaExotica.h"
 
 class BocadoDoSolo;
 
@@ -22,6 +23,7 @@ class Planta {
         ERVA = 'e',
         PLANTAEXOTICA = 'x',
         ROSEIRA = 'r',
+        RAIZPE = '/',
         NONE = 'n'
     };
     static std::unique_ptr<Planta> createPlant(BocadoDoSolo * sitio, char type); // Função statica para a criação das plantas
@@ -39,7 +41,7 @@ class Planta {
     int getAguaSolo()const;
     int getNutrientesSolo()const;
 
-    int tirarDoSoloAgua(int agua);;
+    int tirarDoSoloAgua(int agua);
     int tirarDoSoloNutrientes(int nutrientes);
     int addNutrientes(int nutrientes);
     int addAgua(int agua);
