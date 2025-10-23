@@ -4,7 +4,7 @@
 
 #ifndef TP_POO_2526_CACTO_H
 #define TP_POO_2526_CACTO_H
-#include "Cacto.h"
+
 #include "Settings.h"
 #include "data/Planta.h"
 #include "array"
@@ -20,6 +20,7 @@ class Cacto final : public Planta{
     static constexpr int multiplica_agua_maior = Settings::Cacto::multiplica_agua_maior;
     static constexpr int absorcao_nutrientes = Settings::Cacto::absorcao_nutrientes;
     static constexpr int multiplica_nutrientes_maior = Settings::Cacto::multiplica_nutrientes_maior;
+    bool expanded;
 
     // ------------------
 public:

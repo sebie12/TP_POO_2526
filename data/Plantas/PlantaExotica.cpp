@@ -4,25 +4,24 @@
 
 #include "PlantaExotica.h"
 
+#include <iostream>
+
 PlantaExotica::PlantaExotica(BocadoDoSolo *sitio) : Planta(sitio, 0, 0), nRaizes(0){
 
 }
 PlantaExotica::~PlantaExotica() = default;
 
-void PlantaExotica::absorbeNasRaizes() {
-    for (const auto& it : raizes) {
-        auto temp = it->alimentar();
-        addAgua(temp[0]);
-        addNutrientes(temp[1]);
-    }
-}
+
 
 bool PlantaExotica::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
     return false;
 }
 
-int PlantaExotica::pasaInstante(int instante) {
-    return 0;
+int PlantaExotica::pasaInstante(const int instante) {
+    if (verificaMorte(instante)) {
+        return getNutrientes();
+    }
+    return -1;
 }
 
 bool PlantaExotica::verificaMorte(const int instanteAtual) {
@@ -36,11 +35,11 @@ char PlantaExotica::getId() const {
     return id;
 }
 
-void PlantaExotica::novaRaiz(std::shared_ptr<RaizPlantaExotica> novaRaiz) {
-    raizes.emplace_back(novaRaiz);
-    nRaizes++;
-}
 
 std::array<int, 2> PlantaExotica::alimentar() {
     return {0,0};
+}
+
+void PlantaExotica::addRaiz() {
+    nRaizes++;
 }

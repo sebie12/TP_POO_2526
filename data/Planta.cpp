@@ -2,28 +2,31 @@
 // Created by sebie on 07/10/2025.
 //
 
-#include "Planta.h"
-
 #include <memory>
+#include "data/Planta.h"
 #include "Plantas/Cacto.h"
 #include "Plantas/Erva.h"
 #include "Plantas/Roseira.h"
-class Planta;
+#include "Plantas/PlantaExotica.h"
+
 class Cacto;
 class Erva;
+
 Planta::Planta(BocadoDoSolo * sitio,const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), aguaAtual(agua), nutriAtual(nutrientes), solo(sitio){
 }
 
 std::unique_ptr<Planta> Planta::createPlant(BocadoDoSolo * sitio, const char type) {
     switch (type) {
-        case 'c':
+        case Planta::CACTO:
             return std::make_unique<Cacto>(sitio);
-        case 'e':
+        case Planta::ERVA:
             return std::make_unique<Erva>(sitio);
-        case 'r':
+        case Planta::ROSEIRA:
             return std::make_unique<Roseira>(sitio);
         case Planta::PLANTAEXOTICA:
             return std::make_unique<PlantaExotica>(sitio);
+        case Planta::RAIZPE:
+            return std::make_unique<RaizPlantaExotica>(sitio);
         default:
             return nullptr;
     }

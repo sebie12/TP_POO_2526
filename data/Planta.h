@@ -7,7 +7,6 @@
 #include <array>
 #include <memory>
 #include "BocadoDoSolo.h"
-#include "Plantas/RaizPlantaExotica.h"
 
 class BocadoDoSolo;
 

@@ -15,7 +15,7 @@ class Jardim;
 class Planta;
 
 class BocadoDoSolo {
-    Jardim * jardim;
+    Jardim * jardim{};
     std::unique_ptr<Planta> planta;
     std::shared_ptr<Jardineiro> jardineiro;
     std::unique_ptr<Ferramenta> ferramenta;
@@ -32,6 +32,7 @@ public:
 
     bool newPlant(char type);
     bool hasPlant()const;
+    void feedPlanta(int novaAgua, int novosNutrientes) const;
 
     int getAgua()const;
     int getNutrientes()const;
@@ -41,7 +42,7 @@ public:
 
     std::string toString()const;
 
-    BocadoDoSolo* operator>>(BocadoDoSolo* outro);
+    BocadoDoSolo* operator>>(const BocadoDoSolo* outro);
 };
 
 

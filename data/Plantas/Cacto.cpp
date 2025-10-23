@@ -6,8 +6,8 @@
 
 // EM PRINCIPIO ACABADO
 
-Cacto::Cacto(BocadoDoSolo * sitio) : Planta(sitio,0,0){}
-Cacto::Cacto(BocadoDoSolo * sitio, const int agua, const int nutrientes): Planta(sitio,agua,nutrientes){}
+Cacto::Cacto(BocadoDoSolo * sitio) : Planta(sitio,0,0), expanded(false){}
+Cacto::Cacto(BocadoDoSolo * sitio, const int agua, const int nutrientes): Planta(sitio,agua,nutrientes), expanded(false){}
 Cacto::~Cacto() = default;
 
 char Cacto::getId()const {
@@ -46,7 +46,11 @@ bool Cacto::verificaMorte(const int instanteAtual) {
 }
 
 bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
-    return getAgua() >= multiplica_agua_maior && getNutrientes() >= multiplica_nutrientes_maior;
+    if (getAgua() >= multiplica_agua_maior && getNutrientes() >= multiplica_nutrientes_maior && !expanded) {
+        expanded=!expanded;
+        return true;
+    }
+    return false;
 }
 
 

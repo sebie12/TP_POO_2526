@@ -29,6 +29,10 @@ int BocadoDoSolo::iterate(const int instante) {
         if (planta->verificaExpansao(agua, nutrientes, instante)) {
             return Jardim::EXPAND;
         }
+        if (planta->getId() == Planta::PLANTAEXOTICA) {
+            std::cout << "PE wants to expand!" << std::endl;
+            return Jardim::PLANTAEXOTICAEXPAND;
+        }
         return Jardim::ALIVE;
     }
     return Jardim::NONE;
@@ -73,6 +77,14 @@ bool BocadoDoSolo::hasPlant() const {
     return planta != nullptr;
 }
 
+void BocadoDoSolo::feedPlanta(const int novaAgua, const int novosNutrientes) const {
+    if (planta == nullptr)
+        return;
+    planta->addAgua(novaAgua);
+    planta->addNutrientes(novosNutrientes);
+}
+
+
 
 int BocadoDoSolo::getAgua() const {
     return agua;
@@ -81,6 +93,7 @@ int BocadoDoSolo::getAgua() const {
 int BocadoDoSolo::getNutrientes() const {
     return nutrientes;
 }
+
 
 char BocadoDoSolo::getIdForPrint() const {
     if (jardineiro!=nullptr) {
@@ -106,7 +119,7 @@ std::string BocadoDoSolo::toString() const {
     return oss.str();
 }
 
-BocadoDoSolo *BocadoDoSolo::operator>>(BocadoDoSolo *outro) {
+BocadoDoSolo *BocadoDoSolo::operator>>(const BocadoDoSolo *outro) {
     const int tempAgua = planta->getAgua() / 2;
     const int tempNutrientes = planta->getNutrientes() / 2;
 
@@ -132,6 +145,7 @@ void BocadoDoSolo::killPlanta() {
     feedFromDeadPlant(planta->getAgua(), planta->getNutrientes());
     planta = nullptr;
 }
+
 
 
 
