@@ -4,6 +4,8 @@
 
 #include "Erva.h"
 
+#include <iostream>
+
 Erva::Erva(BocadoDoSolo * sitio): Planta(sitio,inicial_agua,inicial_nutrientes) {
     instanteNascimento = -1;
     ultimaExpansao = 0;
@@ -37,6 +39,8 @@ char Erva::getId() const {
 }
 
 std::array<int, 2> Erva::alimentar() {
-    return {perderAgua(absorcao_agua) ,perderNutri(absorcao_nutrientes)};
+    const auto tempAgua = tirarDoSoloAgua(absorcao_agua);
+    const auto tempNutrientes = tirarDoSoloNutrientes(absorcao_nutrientes);
+    return {addAgua(tempAgua) ,addNutrientes(tempNutrientes)};
 }
 

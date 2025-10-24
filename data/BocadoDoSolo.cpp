@@ -67,10 +67,12 @@ char BocadoDoSolo::getIdFromPlant() const {
     return 'n';
 }
 bool BocadoDoSolo::newPlant(const char type) {
-    if (planta != nullptr && type != Planta::plantTypes::ERVA)
-        return false;
-    planta = Planta::createPlant(this,type);
-    return true;
+    if (planta == nullptr || type == Planta::ERVA) {
+        planta = nullptr;
+        planta = Planta::createPlant(this,type);
+        return true;
+    }
+    return false;
 }
 
 bool BocadoDoSolo::hasPlant() const {
