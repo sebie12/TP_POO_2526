@@ -5,6 +5,7 @@
 #ifndef TP_POO_2526_JARDINEIRO_H
 #define TP_POO_2526_JARDINEIRO_H
 #include "Ferramenta.h"
+#include <vector>
 #include "Settings.h"
 
 
@@ -14,8 +15,8 @@ class Jardineiro {
     static const int max_plantacoes = Settings::Jardineiro::max_plantacoes;
     static const int max_colheitas = Settings::Jardineiro::max_colheitas;
 // Acabam as constantes
-    Ferramenta ferr;
-    Ferramenta ferrEquipada;
+    std::vector<std::shared_ptr<Ferramenta>> ferr;
+    int ferrEquipada;
 
 };
 

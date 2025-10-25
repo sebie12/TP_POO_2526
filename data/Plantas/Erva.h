@@ -21,7 +21,7 @@ class Erva : public Planta{
     static constexpr int absorcao_nutrientes = Settings::ErvaDaninha::absorcao_nutrientes;
     static constexpr int multiplica_nutrientes_maior = Settings::ErvaDaninha::multiplica_nutrientes_maior;
 
-    int instanteNascimento{}, ultimaExpansao;
+    int instanteNascimento, ultimaExpansao;
     // ------------------
 public:
     explicit Erva(BocadoDoSolo * sitio);

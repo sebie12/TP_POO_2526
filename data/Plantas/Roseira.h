@@ -8,7 +8,7 @@
 #include "Settings.h"
 #include "data/Planta.h"
 
-class Roseira : public Planta{
+class Roseira final : public Planta{
     static constexpr char id = 'r';
     static constexpr int inicial_agua = Settings::Roseira::inicial_agua; // us
     static constexpr int inicial_nutrientes = Settings::Roseira::inicial_nutrientes; // us
