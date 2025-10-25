@@ -18,6 +18,15 @@ BocadoDoSolo::~BocadoDoSolo() = default;
 
 int BocadoDoSolo::iterate(const int instante) {
     if (planta != nullptr) {
+        if (jardineiro != nullptr) {
+            //aplicaEfeitoFerramenta(jardineiro->getFerramentaAtiva()); // Esta função tem de ser feito no jardineiro
+        }
+        else if (ferramenta != nullptr) {
+            if (ferramenta->getEmpty()) {
+
+            }
+
+        }
         const auto temp = planta->pasaInstante(instante);
         if (temp != -1) {
             killPlanta();// Se a planta morrer
@@ -52,6 +61,41 @@ int BocadoDoSolo::perdeNutrientes(const int unidades) {
         nutrientes = valor;
     return valor;
 }
+
+int BocadoDoSolo::getAgua() const {
+    return agua;
+}
+
+int BocadoDoSolo::getNutrientes() const {
+    return nutrientes;
+}
+
+char BocadoDoSolo::getIdForPrint() const {
+    if (jardineiro!=nullptr) {
+        return 'j';
+
+    }else if (planta != nullptr) {
+        return getIdFromPlant();
+    }
+    else if(ferramenta != nullptr) {
+        return 'f';
+    }
+    return '+';
+}
+
+std::string BocadoDoSolo::toString() const {
+    std::ostringstream oss;
+    oss << "Agua: " << agua << " Nutrientes: " << nutrientes << "\n";
+    oss << "Planta: " << (planta != nullptr ? getIdFromPlant() : 'N') << "\n";
+    oss << planta->toString() << "\n";
+    oss << "Jardineiro: " << (jardineiro != nullptr ? 'Y' : 'N') << "\n";
+    oss << "Ferramenta: " << (ferramenta != nullptr ? 'Y' : 'N') << "\n";
+
+    return oss.str();
+}
+
+// ----------------- Plant Logic -----------------------------
+
 void BocadoDoSolo::feedFromDeadPlant(const int aguaDaPlanta, const int nutriDaPlanta) {
     if (planta->getId() == Planta::CACTO) {
         this->nutrientes += nutriDaPlanta;
@@ -86,41 +130,6 @@ void BocadoDoSolo::feedPlanta(const int novaAgua, const int novosNutrientes) con
     planta->addNutrientes(novosNutrientes);
 }
 
-
-
-int BocadoDoSolo::getAgua() const {
-    return agua;
-}
-
-int BocadoDoSolo::getNutrientes() const {
-    return nutrientes;
-}
-
-
-char BocadoDoSolo::getIdForPrint() const {
-    if (jardineiro!=nullptr) {
-        return 'j';
-
-    }else if (planta != nullptr) {
-        return getIdFromPlant();
-    }
-    else if(ferramenta != nullptr) {
-        return 'f';
-    }
-    return '+';
-}
-
-std::string BocadoDoSolo::toString() const {
-    std::ostringstream oss;
-    oss << "Agua: " << agua << " Nutrientes: " << nutrientes << "\n";
-    oss << "Planta: " << (planta != nullptr ? getIdFromPlant() : 'N') << "\n";
-    oss << planta->toString() << "\n";
-    oss << "Jardineiro: " << (jardineiro != nullptr ? 'Y' : 'N') << "\n";
-    oss << "Ferramenta: " << (ferramenta != nullptr ? 'Y' : 'N') << "\n";
-
-    return oss.str();
-}
-
 BocadoDoSolo *BocadoDoSolo::operator>>(const BocadoDoSolo *outro) {
     const int tempAgua = planta->getAgua() / 2;
     const int tempNutrientes = planta->getNutrientes() / 2;
@@ -147,6 +156,40 @@ void BocadoDoSolo::killPlanta() {
     feedFromDeadPlant(planta->getAgua(), planta->getNutrientes());
     planta = nullptr;
 }
+
+//  ------------- Ferramenta Logic -----------------------------
+
+void BocadoDoSolo::newFerramenta(const char tipo) {
+    ferramenta = Ferramenta::createFerramenta(tipo);
+}
+std::shared_ptr<Ferramenta> BocadoDoSolo::removeFerramenta() {
+    const auto temp = ferramenta;
+    ferramenta = nullptr;
+    return temp;
+}
+void BocadoDoSolo::aplicaEfeitoFerramenta(const char tipo) { // Quando chamado, aplica o efeito da ferramenta (que esteja na mão do jardineiro)
+    if (ferramenta == nullptr)
+        return;
+    switch (tipo) {
+        case Ferramenta::ADUBO:
+            nutrientes += ferramenta->instante();
+            if (ferramenta->getEmpty()) { // foi embora pelo vento
+                removeFerramenta();
+            }
+            break;
+        case Ferramenta::REGADOR:
+            agua += ferramenta->instante();
+            break;
+        case Ferramenta::TESOURA:
+            /*if (planta != nullptr && planta->getId() == Planta::ERVA) {
+                killPlanta();
+            }
+            break;*/
+        default:
+            break;
+    }
+}
+
 
 
 

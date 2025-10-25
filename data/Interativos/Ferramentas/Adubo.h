@@ -9,9 +9,16 @@
 
 
 class Adubo : public Ferramenta {
-    static const int capacidade = Settings::Adubo::capacidade;
-    static const int dose = Settings::Adubo::dose;
+    static constexpr int capacidade = Settings::Adubo::capacidade;
+    static constexpr int dose = Settings::Adubo::dose;
+
+    int nutrientesRestantes;
+public:
+    Adubo();
+    ~Adubo();
+    int instante() override;
 };
+
 
 
 #endif //TP_POO_2526_ADUBO_H

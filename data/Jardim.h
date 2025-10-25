@@ -41,7 +41,7 @@ public:
     std::string getDataFromBocado(int i, int j) const;
     bool hasFullViznhos(int linha, int col) const;
     std::array<int, 4> verificaLimites(int linha, int col) const;
-    std::array<int, 4> verificaLimitesEsquinas(int linha, int col) const;
+
 };
 
 

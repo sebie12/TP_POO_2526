@@ -18,12 +18,15 @@ class BocadoDoSolo {
     Jardim * jardim{};
     std::unique_ptr<Planta> planta;
     std::shared_ptr<Jardineiro> jardineiro;
-    std::unique_ptr<Ferramenta> ferramenta;
+    std::shared_ptr<Ferramenta> ferramenta;
     int agua, nutrientes;
 public:
     BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~BocadoDoSolo();
     int iterate(int instante);
+    std::string toString()const;
+
+    // PLant Logic
     void feedFromDeadPlant(int aguaDaPlanta, int nutriDaPlanta);
     void killPlanta();
 
@@ -40,9 +43,13 @@ public:
     char getIdFromPlant()const;
     char getIdForPrint()const;
 
-    std::string toString()const;
-
     BocadoDoSolo* operator>>(const BocadoDoSolo* outro);
+
+    // Ferramenta Logic
+    void newFerramenta(char tipo);
+    std::shared_ptr<Ferramenta> removeFerramenta();
+    void aplicaEfeitoFerramenta(char tipo);
+
 };
 
 

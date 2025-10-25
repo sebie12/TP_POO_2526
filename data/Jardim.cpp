@@ -64,9 +64,6 @@ std::array<int, 4> Jardim::verificaLimites(const int linha, const int col) const
     const array<int, 4> retValue=  {directionsHorizontal[0],directionsHorizontal[1], directionsVertical[0], directionsVertical[1]};
     return retValue;
 }
-std::array<int, 4> Jardim::verificaLimitesEsquinas(int linha, int col) const {
-
-}
 
 
 
@@ -170,6 +167,9 @@ void Jardim::genRandPlants() const {
         }
     }
 }
+
+
+
 
 
 
