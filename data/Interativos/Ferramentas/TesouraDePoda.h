@@ -7,7 +7,11 @@
 #include "data/Interativos/Ferramenta.h"
 
 
-class TesouraDePoda : Ferramenta {
+class TesouraDePoda final : public Ferramenta {
+public:
+    TesouraDePoda();
+    ~TesouraDePoda() override;
+    void instante(BocadoDoSolo*posAtual) override;
 };
 
 

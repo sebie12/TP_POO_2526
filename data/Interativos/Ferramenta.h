@@ -6,9 +6,14 @@
 #define TP_POO_2526_FERRAMENTA_H
 #include <memory>
 
+#include "data/BocadoDoSolo.h"
+
 
  class Ferramenta {
-    const char id;
+    static bool initialized;
+    static int N_SERIE_REF;
+    int id;
+    const char nome;
     bool empty;
 public:
     virtual ~Ferramenta();
@@ -18,12 +23,13 @@ public:
         TESOURA = 't',
         FERRAMENTAZ = 'z'
     };
-    explicit Ferramenta(char id);
-    virtual int instante() = 0; // Está igual a 0 pq só vai ser definida nos filhos
-    char getId() const;
+    explicit Ferramenta(char nome);
+    virtual void instante(BocadoDoSolo * posAtual) = 0; // Está igual a 0 pq só vai ser definida nos filhos
+    char getNome() const;
+    int getId() const;
     bool getEmpty() const; // Verifica se ja se esgotou o conteudo ou se é inutil (não aplica na tesoura)
     void changeEmpty();
-    static std::shared_ptr<Ferramenta> createFerramenta(const char tipo);
+    static std::shared_ptr<Ferramenta> createFerramenta(char tipo);
 };
 
 

@@ -8,15 +8,15 @@
 #include "data/Interativos/Ferramenta.h"
 
 
-class Adubo : public Ferramenta {
+class Adubo final : public Ferramenta {
     static constexpr int capacidade = Settings::Adubo::capacidade;
     static constexpr int dose = Settings::Adubo::dose;
 
     int nutrientesRestantes;
 public:
     Adubo();
-    ~Adubo();
-    int instante() override;
+    ~Adubo() override;
+    void instante(BocadoDoSolo*posAtual) override;
 };
 
 

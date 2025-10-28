@@ -32,6 +32,8 @@ public:
 
     int perdeAgua(int unidades);
     int perdeNutrientes(int unidades);
+    int ganhaAgua(int unidades);
+    int ganhaNutrientes(int unidades);
 
     bool newPlant(char type);
     bool hasPlant()const;
@@ -48,7 +50,7 @@ public:
     // Ferramenta Logic
     void newFerramenta(char tipo);
     std::shared_ptr<Ferramenta> removeFerramenta();
-    void aplicaEfeitoFerramenta(char tipo);
+
 
 };
 

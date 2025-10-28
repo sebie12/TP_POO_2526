@@ -3,12 +3,29 @@
 //
 
 #include "Ferramenta.h"
-Ferramenta::Ferramenta(const char id) : id(id), empty(false) {}
+
+#include "Ferramentas/Adubo.h"
+#include "Ferramentas/FerramentaZ.h"
+#include "Ferramentas/Regador.h"
+#include "Ferramentas/TesouraDePoda.h"
+
+Ferramenta::Ferramenta(const char nome) : nome(nome), empty(false) {
+    if (!initialized) {
+        N_SERIE_REF = 1;
+        initialized = true;
+    }
+    id = N_SERIE_REF++;
+}
+
 Ferramenta::~Ferramenta() = default;
 
-char Ferramenta::getId() const {
+int Ferramenta::getId() const {
     return id;
 }
+char Ferramenta::getNome() const {
+    return nome;
+}
+
 bool Ferramenta::getEmpty() const {
     return empty;
 }
@@ -18,13 +35,13 @@ void Ferramenta::changeEmpty() {
 std::shared_ptr<Ferramenta> Ferramenta::createFerramenta(const char tipo) {
     switch (tipo) {
         case ADUBO:
-            return std::make_shared<Ferramenta>(ADUBO);
+            return std::make_shared<Adubo>();
         case REGADOR:
-            return std::make_shared<Ferramenta>(REGADOR);
+            return std::make_shared<Regador>();
         case TESOURA:
-            return std::make_shared<Ferramenta>(TESOURA);
+            return std::make_shared<TesouraDePoda>();
         case FERRAMENTAZ:
-            return std::make_shared<Ferramenta>(FERRAMENTAZ);
+            return std::make_shared<FerramentaZ>();
         default:
             return nullptr;
     }

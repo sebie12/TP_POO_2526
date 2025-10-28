@@ -19,7 +19,7 @@ BocadoDoSolo::~BocadoDoSolo() = default;
 int BocadoDoSolo::iterate(const int instante) {
     if (planta != nullptr) {
         if (jardineiro != nullptr) {
-            //aplicaEfeitoFerramenta(jardineiro->getFerramentaAtiva()); // Esta função tem de ser feito no jardineiro
+            jardineiro->usaFerramenta();
         }
         else if (ferramenta != nullptr) {
             if (ferramenta->getEmpty()) {
@@ -62,6 +62,16 @@ int BocadoDoSolo::perdeNutrientes(const int unidades) {
     return valor;
 }
 
+int BocadoDoSolo::ganhaAgua(const int unidades) {
+    agua += unidades;
+    return agua;
+}
+
+int BocadoDoSolo::ganhaNutrientes(const int unidades) {
+    nutrientes += unidades;
+    return nutrientes;
+}
+
 int BocadoDoSolo::getAgua() const {
     return agua;
 }
@@ -73,14 +83,14 @@ int BocadoDoSolo::getNutrientes() const {
 char BocadoDoSolo::getIdForPrint() const {
     if (jardineiro!=nullptr) {
         return 'j';
-
-    }else if (planta != nullptr) {
+    }
+    if (planta != nullptr) {
         return getIdFromPlant();
     }
-    else if(ferramenta != nullptr) {
-        return 'f';
+    if(ferramenta != nullptr) {
+        return ferramenta->getId();
     }
-    return '+';
+    return ' ';
 }
 
 std::string BocadoDoSolo::toString() const {
@@ -167,28 +177,7 @@ std::shared_ptr<Ferramenta> BocadoDoSolo::removeFerramenta() {
     ferramenta = nullptr;
     return temp;
 }
-void BocadoDoSolo::aplicaEfeitoFerramenta(const char tipo) { // Quando chamado, aplica o efeito da ferramenta (que esteja na mão do jardineiro)
-    if (ferramenta == nullptr)
-        return;
-    switch (tipo) {
-        case Ferramenta::ADUBO:
-            nutrientes += ferramenta->instante();
-            if (ferramenta->getEmpty()) { // foi embora pelo vento
-                removeFerramenta();
-            }
-            break;
-        case Ferramenta::REGADOR:
-            agua += ferramenta->instante();
-            break;
-        case Ferramenta::TESOURA:
-            /*if (planta != nullptr && planta->getId() == Planta::ERVA) {
-                killPlanta();
-            }
-            break;*/
-        default:
-            break;
-    }
-}
+
 
 
 
