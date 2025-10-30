@@ -55,12 +55,11 @@ bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
 
 
 
-std::array<int, 2> Cacto::alimentar() {
+void Cacto::alimentar() {
     const float temp = static_cast<float>(getAguaSolo()) * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
-    const std::array<int, 2> aguaEnutri =
-        {tirarDoSoloAgua(static_cast<int>(temp)),
-        tirarDoSoloNutrientes(absorcao_nutrientes)};
-    return aguaEnutri;
+    tirarDoSoloAgua(static_cast<int>(temp));
+    tirarDoSoloNutrientes(absorcao_nutrientes);
+
 }
 
 

@@ -4,6 +4,8 @@
 
 #ifndef TP_POO_2526_PLANTA_H
 #define TP_POO_2526_PLANTA_H
+#include <string>
+#include <sstream>
 #include <array>
 #include <memory>
 #include "BocadoDoSolo.h"
@@ -22,7 +24,6 @@ class Planta {
         ERVA = 'e',
         PLANTAEXOTICA = 'x',
         ROSEIRA = 'r',
-        RAIZPE = '/',
         NONE = 'n'
     };
     static std::unique_ptr<Planta> createPlant(BocadoDoSolo * sitio, char type); // Função statica para a criação das plantas
@@ -31,7 +32,7 @@ class Planta {
     virtual bool verificaMorte(int nInstantes) = 0;
     virtual bool verificaExpansao(int agua, int nutrientes, int instanteAtual) = 0; // Verifica se a planta vai se expandir num bocado vizinho
     virtual char getId() const = 0;
-    virtual std::array<int, 2> alimentar() = 0;
+    virtual void alimentar() = 0;
     // acabam as virtuais
 
     int getAgua()const;

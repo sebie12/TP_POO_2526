@@ -25,8 +25,6 @@ std::unique_ptr<Planta> Planta::createPlant(BocadoDoSolo * sitio, const char typ
             return std::make_unique<Roseira>(sitio);
         case Planta::PLANTAEXOTICA:
             return std::make_unique<PlantaExotica>(sitio);
-        case Planta::RAIZPE:
-            return std::make_unique<RaizPlantaExotica>(sitio);
         default:
             return nullptr;
     }

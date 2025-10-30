@@ -38,9 +38,9 @@ char Erva::getId() const {
     return id;
 }
 
-std::array<int, 2> Erva::alimentar() {
+void Erva::alimentar() {
     const auto tempAgua = tirarDoSoloAgua(absorcao_agua);
     const auto tempNutrientes = tirarDoSoloNutrientes(absorcao_nutrientes);
-    return {addAgua(tempAgua) ,addNutrientes(tempNutrientes)};
+    addAgua(tempAgua);addNutrientes(tempNutrientes);
 }
 
