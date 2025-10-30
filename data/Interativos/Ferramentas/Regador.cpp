@@ -3,3 +3,9 @@
 //
 
 #include "Regador.h"
+
+Regador::Regador() : Ferramenta(Ferramenta::REGADOR) {}
+Regador::~Regador() = default;
+void Regador::instante(BocadoDoSolo*posAtual) { // Esta função tem de ser redeclarada em cada ferramenta (usando override)
+
+}

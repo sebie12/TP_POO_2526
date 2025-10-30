@@ -3,3 +3,231 @@
 //
 
 #include "Simulador.h"
+
+#include <iostream>
+#include <sstream> // Necessário para std::istringstream
+
+Simulador::Simulador() : jardim(nullptr) {
+    instante = 0;
+}
+Simulador::~Simulador() {
+    delete jardim;
+}
+
+void Simulador::run() {
+    std::string linha;
+    std::cout << "=== Simulador de Jardim ===\n";
+    std::cout << "Escreve 'ajuda' para ver os comandos disponiveis.\n";
+
+    while (!terminou) {
+        std::cout << "> ";
+        std::getline(std::cin, linha);
+
+        // Criamos o stream diretamente aqui
+        std::istringstream iss(linha);
+
+        // E passamos o stream para o interpretador
+        if (!interpretaComando(iss))
+            std::cout << "Comando invalido ou parametros incorretos.\n";
+    }
+}
+
+bool Simulador::interpretaComando(std::istringstream& iss) {
+
+    std::string cmd;
+    if (!(iss >> cmd)) { // Tenta ler o primeiro token (comando)
+        return true;
+    }
+
+    // ------------------ COMANDOS GERAIS ------------------
+
+     if (cmd == "fim") {
+        terminou = true;
+        std::cout << "Encerrando simulador...\n";
+        return true;
+    }
+
+    if (cmd == "ajuda") {
+        mostraAjuda();
+        return true;
+    }
+
+    if (cmd == "jardim") {
+        std::string token1, token2;
+        // Tenta ler os dois argumentos necessários
+        if (!(iss >> token1 >> token2)) {
+            std::cout << "Uso: jardim <linhas> <colunas>\n";
+            return false;
+        }
+
+        const int linhas = std::stoi(token1);
+        const int colunas = std::stoi(token2);
+
+        if (linhas <= 0 || colunas <= 0 || linhas > 26 || colunas > 26) {
+            std::cout << "Dimensoes invalidas. Use entre 1 e 26.\n";
+            return false;
+        }
+
+        delete jardim;
+        jardim = new Jardim(linhas, colunas);
+        std::cout << "Jardim criado com " << linhas << " linhas e " << colunas << " colunas.\n";
+        return true;
+    }
+
+    // Os restantes comandos so sao validos se o jardim ja existir
+    if (jardim == nullptr) {
+        std::cout << "Criar primeiro o jardim com o comando: jardim <l> <c>\n";
+        return false;
+    }
+
+    // ------------------ COMANDOS DE TESTE ------------------
+    if (cmd == "generaPlantas") {
+        std::cout << "Gerando plantas aleatorias no jardim.\n";
+        jardim->genRandPlants();
+        return true;
+    }
+    // ------------------ COMANDOS DE TEMPO ------------------
+    if (cmd == "avanca") {
+        int n = 1;
+        std::string token1;
+        if (iss >> token1) { // Se conseguir ler um argumento opcional
+            n = std::stoi(token1);
+        }
+        std::cout << "(Meta 1) Avancaria " << n << " instantes.\n";
+        return true;
+    }
+
+    // ------------------ COMANDOS DE LISTAGEM ------------------
+    if (cmd == "lplantas") {
+        std::cout << jardim->toString();
+        return true;
+    }
+
+    if (cmd == "lplanta") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "Imprimindo informacoes da planta em " << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "larea") {
+        std::cout << "(Meta 1) Listaria area com elementos nao vazios.\n";
+        return true;
+    }
+
+    if (cmd == "lsolo") {
+        std::string token1, token2;
+        if (!(iss >> token1)) return false; // Precisa de pelo menos 1 argumento
+
+        std::cout << "(Meta 1) Mostraria informacoes do solo em " << token1;
+        if (iss >> token2) // Tenta ler o segundo argumento opcional
+            std::cout << " com raio " << token2;
+        std::cout << ".\n";
+        return true;
+    }
+
+    if (cmd == "lferr") {
+        std::cout << "(Meta 1) Listaria ferramentas do jardineiro.\n";
+        return true;
+    }
+
+    // ------------------ COMANDOS DE ACAO ------------------
+
+    if (cmd == "colhe") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "(Meta 1) Colheria planta em " << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "planta") {
+        std::string token1, token2;
+        if (!(iss >> token1 >> token2)) return false; // Precisa de 2 argumentos
+        std::cout << "(Meta 1) Plantaria tipo " << token2
+                  << " em " << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "larga") {
+        std::cout << "(Meta 1) Largaria ferramenta na mao.\n";
+        return true;
+    }
+
+    if (cmd == "pega") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "(Meta 1) Pegaria ferramenta n" << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "compra") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+
+        const char tipo = token1[0];
+        if (tipo == 'g' || tipo == 'a' || tipo == 't' || tipo == 'z')
+            std::cout << "(Meta 1) Compraria ferramenta do tipo " << tipo << ".\n";
+        else
+            std::cout << "Tipo de ferramenta invalido. Use g, a, t ou z.\n";
+        return true;
+    }
+
+    // ------------------ MOVIMENTO DO JARDINEIRO ------------------
+    if ((cmd == "e" || cmd == "d" || cmd == "b" || cmd == "c")) {
+        std::cout << "(Meta 1) Movimentaria jardineiro: " << cmd << ".\n";
+        return true;
+    }
+
+    if (cmd == "entra") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "(Meta 1) Jardineiro entraria em " << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "sai") {
+        std::cout << "(Meta 1) Jardineiro sairia do jardim.\n";
+        return true;
+    }
+
+    // ------------------ OUTROS COMANDOS ------------------
+    if (cmd == "grava") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "(Meta 1) Gravaria copia com o nome " << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "recupera") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "(Meta 1) Recuperaria copia com o nome " << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "apaga") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "(Meta 1) Apagaria copia " << token1 << ".\n";
+        return true;
+    }
+
+    if (cmd == "executa") {
+        std::string token1;
+        if (!(iss >> token1)) return false; // Precisa de 1 argumento
+        std::cout << "(Meta 1) Executaria comandos do ficheiro " << token1 << ".\n";
+        return true;
+    }
+
+    return false;
+}
+
+void Simulador::mostraAjuda() {
+    std::cout << "===== COMANDOS DISPONIVEIS (META 1) =====\n";
+    std::cout << "Tempo: avanca [n]\n";
+    std::cout << "Listagem: lplantas | lplanta <l><c> | larea | lsolo <l><c> [n] | lferr\n";
+    std::cout << "Acoes: colhe <l><c> | planta <l><c> <tipo> | larga | pega <n> | compra <c>\n";
+    std::cout << "Movimento: e | d | b | c | entra <l><c> | sai\n";
+    std::cout << "Geral: jardim <n> <n> | grava <nome> | recupera <nome> | apaga <nome> | executa <ficheiro>\n";
+    std::cout << "Fim: fim\n";
+}

@@ -8,9 +8,13 @@
 #include "data/Interativos/Ferramenta.h"
 
 
-class Regador : public Ferramenta{
-    static const int capacidade = Settings::Regador::capacidade ;
-    static const int dose = Settings::Regador::dose;
+class Regador final : public Ferramenta{
+    static constexpr int capacidade = Settings::Regador::capacidade ;
+    static constexpr int dose = Settings::Regador::dose;
+public:
+    Regador();
+    ~Regador() override;
+    void instante(BocadoDoSolo*posAtual) override;
 };
 
 

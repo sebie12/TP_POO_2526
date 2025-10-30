@@ -1,6 +1,7 @@
 #ifndef SETTINGS_SETTINGS_H
 #define SETTINGS_SETTINGS_H
 
+
 class Settings {
     public:
     class Jardim {
@@ -66,6 +67,16 @@ class Settings {
         static const int multiplica_instantes = 5;
         static const int nova_nutrientes = 5;
         static const int original_nutrientes = 5;
+    };
+    class PlantaExotica {
+    public:
+        static const int inicial_agua = 0;
+        static const int inicial_nutrientes = 0;
+        static const int per_absorcao_agua = 15;
+        static const int per_absorcao_nutrientes = 15;
+        static const int per_absorcao_agua_raiz = 5;
+        static const int per_absorcao_nutrientes_raiz = 5;
+        static const int morre_instantes = 5;
     };
 };
 

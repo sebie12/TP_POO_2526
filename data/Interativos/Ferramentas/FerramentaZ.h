@@ -7,7 +7,12 @@
 #include "data/Interativos/Ferramenta.h"
 
 // Comportamento definido por nós
-class FerramentaZ : public Ferramenta {
+class FerramentaZ final : public Ferramenta {
+
+public:
+    FerramentaZ();
+    ~FerramentaZ() override;
+    void instante(BocadoDoSolo*posAtual) override;
 };
 
 
