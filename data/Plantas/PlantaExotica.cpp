@@ -18,16 +18,12 @@ bool PlantaExotica::verificaExpansao(int agua, int nutrientes, int instanteAtual
 }
 
 int PlantaExotica::pasaInstante(const int instante) {
-    if (verificaMorte(instante)) {
-        return getNutrientes();
-    }
+
     return -1;
 }
 
 bool PlantaExotica::verificaMorte(const int instanteAtual) {
-    if (instanteAtual == 5 && nRaizes < 3) {
-        return true;
-    }
+
     return false;
 }
 
@@ -36,10 +32,8 @@ char PlantaExotica::getId() const {
 }
 
 
-std::array<int, 2> PlantaExotica::alimentar() {
-    return {0,0};
+void PlantaExotica::alimentar() {
 }
-
 void PlantaExotica::addRaiz() {
     nRaizes++;
 }

@@ -16,7 +16,7 @@ class Jardineiro {
     static constexpr int max_colheitas = Settings::Jardineiro::max_colheitas;
 // Acabam as constantes
     BocadoDoSolo * posAtual;
-    std::vector<std::shared_ptr<Ferramenta>> ferr; // Se calhar não podemos usar isto
+    Ferramenta ** ferr{}; // Array de ponteiros para ferramentas
     int ferrEquipada;
 public:
     Jardineiro();

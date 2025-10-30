@@ -15,18 +15,16 @@ class Erva;
 Planta::Planta(BocadoDoSolo * sitio,const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), aguaAtual(agua), nutriAtual(nutrientes), solo(sitio){
 }
 
-std::unique_ptr<Planta> Planta::createPlant(BocadoDoSolo * sitio, const char type) {
+Planta * Planta::createPlant(BocadoDoSolo * sitio, const char type) {
     switch (type) {
         case Planta::CACTO:
-            return std::make_unique<Cacto>(sitio);
+            return new Cacto(sitio);
         case Planta::ERVA:
-            return std::make_unique<Erva>(sitio);
+            return new Erva(sitio);
         case Planta::ROSEIRA:
-            return std::make_unique<Roseira>(sitio);
+            return new Roseira(sitio);
         case Planta::PLANTAEXOTICA:
-            return std::make_unique<PlantaExotica>(sitio);
-        case Planta::RAIZPE:
-            return std::make_unique<RaizPlantaExotica>(sitio);
+            return new PlantaExotica(sitio);
         default:
             return nullptr;
     }

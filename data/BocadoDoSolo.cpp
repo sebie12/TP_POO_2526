@@ -9,12 +9,16 @@
 #include <iostream>
 
 BocadoDoSolo::BocadoDoSolo( const int aguaMin, const int aguaMax, const int nutriMin, const int nutriMax)
-: planta(nullptr), jardineiro(nullptr)
+: planta(nullptr), jardineiro(nullptr), ferramenta(nullptr)
 {
     agua = Rand::generate(aguaMin,aguaMax) ;
     nutrientes = Rand::generate(nutriMin,nutriMax);
 }
-BocadoDoSolo::~BocadoDoSolo() = default;
+BocadoDoSolo::~BocadoDoSolo() {
+    delete planta;
+    delete ferramenta;
+    delete jardineiro;
+};
 
 int BocadoDoSolo::iterate(const int instante) {
     if (planta != nullptr) {
@@ -25,7 +29,6 @@ int BocadoDoSolo::iterate(const int instante) {
             if (ferramenta->getEmpty()) {
 
             }
-
         }
         const auto temp = planta->pasaInstante(instante);
         if (temp != -1) {
@@ -94,10 +97,11 @@ char BocadoDoSolo::getIdForPrint() const {
 }
 
 std::string BocadoDoSolo::toString() const {
+    const std::string temp = planta != nullptr ? planta->toString(): " ";
     std::ostringstream oss;
     oss << "Agua: " << agua << " Nutrientes: " << nutrientes << "\n";
     oss << "Planta: " << (planta != nullptr ? getIdFromPlant() : 'N') << "\n";
-    oss << planta->toString() << "\n";
+    oss << temp  << "\n";
     oss << "Jardineiro: " << (jardineiro != nullptr ? 'Y' : 'N') << "\n";
     oss << "Ferramenta: " << (ferramenta != nullptr ? 'Y' : 'N') << "\n";
 
@@ -107,13 +111,6 @@ std::string BocadoDoSolo::toString() const {
 // ----------------- Plant Logic -----------------------------
 
 void BocadoDoSolo::feedFromDeadPlant(const int aguaDaPlanta, const int nutriDaPlanta) {
-    if (planta->getId() == Planta::CACTO) {
-        this->nutrientes += nutriDaPlanta;
-    }
-    else if (planta->getId() == Planta::ROSEIRA) {
-        this->agua += aguaDaPlanta/2;
-        this->nutrientes += nutriDaPlanta/2;
-    }
 }
 char BocadoDoSolo::getIdFromPlant() const {
     if (planta!= nullptr)
@@ -134,31 +131,11 @@ bool BocadoDoSolo::hasPlant() const {
 }
 
 void BocadoDoSolo::feedPlanta(const int novaAgua, const int novosNutrientes) const {
-    if (planta == nullptr)
-        return;
-    planta->addAgua(novaAgua);
-    planta->addNutrientes(novosNutrientes);
+
 }
 
 BocadoDoSolo *BocadoDoSolo::operator>>(const BocadoDoSolo *outro) {
-    const int tempAgua = planta->getAgua() / 2;
-    const int tempNutrientes = planta->getNutrientes() / 2;
 
-
-    if (planta->getId() == Planta::CACTO) {
-        planta->perderAgua(tempAgua);
-        outro->planta->addAgua(tempAgua);
-
-        planta->perderNutri(tempNutrientes);
-        outro->planta->addNutrientes(tempNutrientes);
-    }
-    else if (planta->getId() == Planta::ROSEIRA) {
-        planta->perderAgua(tempAgua);
-        outro->planta->setAgua(tempAgua);
-
-        planta->setNutri(Settings::Roseira::original_nutrientes);
-        outro->planta->setNutri(Settings::Roseira::nova_nutrientes);
-    }
     return this;
 }
 
@@ -172,7 +149,7 @@ void BocadoDoSolo::killPlanta() {
 void BocadoDoSolo::newFerramenta(const char tipo) {
     ferramenta = Ferramenta::createFerramenta(tipo);
 }
-std::shared_ptr<Ferramenta> BocadoDoSolo::removeFerramenta() {
+Ferramenta * BocadoDoSolo::removeFerramenta() {
     const auto temp = ferramenta;
     ferramenta = nullptr;
     return temp;

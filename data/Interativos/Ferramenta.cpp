@@ -32,16 +32,16 @@ bool Ferramenta::getEmpty() const {
 void Ferramenta::changeEmpty() {
     empty = !empty;
 }
-std::shared_ptr<Ferramenta> Ferramenta::createFerramenta(const char tipo) {
+ Ferramenta* Ferramenta::createFerramenta(const char tipo) {
     switch (tipo) {
         case ADUBO:
-            return std::make_shared<Adubo>();
+            return new Adubo();
         case REGADOR:
-            return std::make_shared<Regador>();
+            return new Regador();
         case TESOURA:
-            return std::make_shared<TesouraDePoda>();
+            return new TesouraDePoda();
         case FERRAMENTAZ:
-            return std::make_shared<FerramentaZ>();
+            return new FerramentaZ();
         default:
             return nullptr;
     }
