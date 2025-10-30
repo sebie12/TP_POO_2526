@@ -7,7 +7,8 @@
 #include "Ferramenta.h"
 #include "../BocadoDoSolo.h"
 #include "Settings.h"
-#include <vector>
+
+class Ferramenta;
 
 class Jardineiro {
     static constexpr int max_movimentos = Settings::Jardineiro::max_movimentos ;

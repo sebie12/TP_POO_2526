@@ -25,10 +25,7 @@ bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
 
     return false;
 }
-
-
-
-std::array<int, 2> Cacto::alimentar() {
+void Cacto::alimentar() {
 
 }
 

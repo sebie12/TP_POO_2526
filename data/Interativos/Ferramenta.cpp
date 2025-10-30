@@ -9,11 +9,9 @@
 #include "Ferramentas/Regador.h"
 #include "Ferramentas/TesouraDePoda.h"
 
+int Ferramenta::N_SERIE_REF = 0;
+
 Ferramenta::Ferramenta(const char nome) : nome(nome), empty(false) {
-    if (!initialized) {
-        N_SERIE_REF = 1;
-        initialized = true;
-    }
     id = N_SERIE_REF++;
 }
 

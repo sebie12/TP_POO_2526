@@ -32,7 +32,7 @@ public:
     int pasaInstante(int instante) override; // virtual pq vai ser mudada em cada filho
     bool verificaMorte(int nInstantes) override;
     bool verificaExpansao(int agua, int nutrientes, int instanteAtual) override; // Verifica se a planta vai se expandir num bocado vizinho
-    std::array<int, 2> alimentar()override;
+    void alimentar()override;
     char getId() const override;
 
 };

@@ -19,6 +19,7 @@ Jardim::Jardim(const int linhas, const int colunas) {
             area[i][j] = new BocadoDoSolo(agua_min, agua_max, nutrientes_min, nutrientes_max);
         }
     }
+
 }
 Jardim::~Jardim() {
     for (int i = 0; i < nLines; i++) {

@@ -4,9 +4,6 @@
 
 #ifndef TP_POO_2526_PLANTAEXOTICA_H
 #define TP_POO_2526_PLANTAEXOTICA_H
-#include "RaizPlantaExotica.h"
-#include <vector>
-#include <memory>
 #include "data/Planta.h"
 // Expande uma raiz cada turno
 // Pode se alimentar dos bocados adjacentes tmb

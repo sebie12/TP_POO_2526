@@ -10,7 +10,6 @@
 
 
  class Ferramenta {
-    static bool initialized;
     static int N_SERIE_REF;
     int id;
     const char nome;

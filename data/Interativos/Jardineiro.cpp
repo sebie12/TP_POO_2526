@@ -21,7 +21,6 @@ void Jardineiro::pegaFerramenta(const std::shared_ptr<Ferramenta>& novaFerrament
 }
 void Jardineiro::descartaFerramenta() {
 
-    }
 }
 void Jardineiro::usaFerramenta(){
 

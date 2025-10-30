@@ -13,6 +13,8 @@
 
 class Jardim;
 class Planta;
+class Jardineiro;
+class Ferramenta;
 
 class BocadoDoSolo {
     Jardim * jardim{};

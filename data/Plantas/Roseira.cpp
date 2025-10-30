@@ -16,11 +16,9 @@ int Roseira::pasaInstante(const int instante) {
     }
     return 0;
 }
-std::array<int, 2> Roseira::alimentar() {
-    const std::array<int, 2> aguaEnutri =
-    {tirarDoSoloAgua(absorcao_agua),
-    tirarDoSoloNutrientes(absorcao_nutrientes)};
-    return  aguaEnutri;
+void Roseira::alimentar() {
+    tirarDoSoloAgua(absorcao_agua);
+    tirarDoSoloNutrientes(absorcao_nutrientes);
 }
 
 bool Roseira::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
