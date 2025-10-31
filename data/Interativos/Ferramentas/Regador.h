@@ -11,6 +11,7 @@
 class Regador final : public Ferramenta{
     static constexpr int capacidade = Settings::Regador::capacidade ;
     static constexpr int dose = Settings::Regador::dose;
+    int aguaRestante;
 public:
     Regador();
     ~Regador() override;

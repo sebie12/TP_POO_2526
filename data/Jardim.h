@@ -40,6 +40,8 @@ public:
     std::string getDataFromBocado(int i, int j) const;
     bool hasFullViznhos(int linha, int col) const;
 
+    Jardim& operator=(const Jardim &outro);
+
 
 };
 

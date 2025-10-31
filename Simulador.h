@@ -12,16 +12,17 @@
 
 class Simulador {
     Jardim *jardim;
+    Jardim * copiaJardim; // Jardim para guardar copias
     int instante; // Define on instante atual
     bool terminou = false;
+
+    static std::string leComandoFicheiro(const std::string &filename); // lê comandos de ficheiro
+    bool interpretaComando(std::istringstream &iss);  // valida e executa comandos
+    static void mostraAjuda() ;           // imprime lista de comandos
 public:
     Simulador();
     ~Simulador();
-
     void run();// loop principal
-    bool interpretaComando(std::istringstream &iss);  // valida e executa comandos
-    static void mostraAjuda() ;           // imprime lista de comandos
-
 };
 
 

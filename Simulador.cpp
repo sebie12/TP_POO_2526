@@ -7,7 +7,7 @@
 #include <iostream>
 #include <sstream> // Necessário para std::istringstream
 
-Simulador::Simulador() : jardim(nullptr) {
+Simulador::Simulador() : jardim(nullptr), copiaJardim(nullptr) {
     instante = 0;
 }
 Simulador::~Simulador() {
@@ -230,4 +230,8 @@ void Simulador::mostraAjuda() {
     std::cout << "Movimento: e | d | b | c | entra <l><c> | sai\n";
     std::cout << "Geral: jardim <n> <n> | grava <nome> | recupera <nome> | apaga <nome> | executa <ficheiro>\n";
     std::cout << "Fim: fim\n";
+}
+
+std::string Simulador::leComandoFicheiro(const std::string &filename) {
+    return "Incompleto";
 }
