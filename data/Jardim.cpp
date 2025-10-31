@@ -92,6 +92,7 @@ void Jardim::genRandPlants() const {
 
 Jardim &Jardim::operator=(const Jardim &outro) {
     // Para a copia
+    return *this;
 }
 
 
