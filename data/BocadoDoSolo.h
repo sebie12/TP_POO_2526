@@ -17,7 +17,6 @@ class Jardineiro;
 class Ferramenta;
 
 class BocadoDoSolo {
-    Jardim * jardim;
     std::unique_ptr<Planta> planta;
     std::shared_ptr<Jardineiro> jardineiro;
     std::shared_ptr<Ferramenta> ferramenta;
