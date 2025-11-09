@@ -17,10 +17,10 @@ class Jardineiro;
 class Ferramenta;
 
 class BocadoDoSolo {
-    Jardim * jardim{};
-    Planta * planta;
-    Jardineiro * jardineiro;
-    Ferramenta * ferramenta;
+    Jardim * jardim;
+    std::unique_ptr<Planta> planta;
+    std::shared_ptr<Jardineiro> jardineiro;
+    std::shared_ptr<Ferramenta> ferramenta;
     int agua, nutrientes;
 public:
     BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
@@ -37,7 +37,7 @@ public:
     int ganhaAgua(int unidades);
     int ganhaNutrientes(int unidades);
 
-    bool newPlant(char type);
+    bool newPlant(std::unique_ptr<Planta>);
     bool hasPlant()const;
     void feedPlanta(int novaAgua, int novosNutrientes) const;
 

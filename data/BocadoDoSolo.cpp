@@ -91,7 +91,7 @@ char BocadoDoSolo::getIdForPrint() const {
         return getIdFromPlant();
     }
     if(ferramenta != nullptr) {
-        return ferramenta->getId();
+        return ferramenta->getNome();
     }
     return ' ';
 }
@@ -117,10 +117,9 @@ char BocadoDoSolo::getIdFromPlant() const {
         return planta->getId();
     return 'n';
 }
-bool BocadoDoSolo::newPlant(const char type) {
-    if (planta == nullptr || type == Planta::ERVA) {
-        planta = nullptr;
-        planta = Planta::createPlant(this,type);
+bool BocadoDoSolo::newPlant(std::unique_ptr<Planta> newPlanta) {
+    if (this->planta == nullptr) {
+        this->planta = std::move(newPlanta);
         return true;
     }
     return false;

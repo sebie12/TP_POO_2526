@@ -28,7 +28,7 @@ public:
     int getId() const;
     bool getEmpty() const; // Verifica se ja se esgotou o conteudo ou se é inutil (não aplica na tesoura)
     void changeEmpty();
-    static Ferramenta * createFerramenta(char tipo);
+    static std::shared_ptr<Ferramenta> createFerramenta(char tipo);
 };
 
 

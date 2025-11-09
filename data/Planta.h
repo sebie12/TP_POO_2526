@@ -26,7 +26,7 @@ class Planta {
         ROSEIRA = 'r',
         NONE = 'n'
     };
-    static Planta * createPlant(BocadoDoSolo * sitio, char type); // Função statica para a criação das plantas
+    static std::unique_ptr<Planta> createPlant(BocadoDoSolo * sitio, char type); // Função statica para a criação das plantas
 
     virtual int pasaInstante(int instante) = 0; // virtual pq vai ser mudada em cada filho
     virtual bool verificaMorte(int nInstantes) = 0;
