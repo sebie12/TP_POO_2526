@@ -14,18 +14,51 @@ char Cacto::getId()const {
     return id;
 }
 int Cacto::pasaInstante(const int instante) {
+    //const array<int,2> temp = alimentar(); // Primeira posição a agua absorbida, segunda nutrientes absorbidos
+    alimentar();
+    if (verificaMorte(instante)) {
+        return getNutrientes();
+    }
     return -1; // Planta está viva
 }
 bool Cacto::verificaMorte(const int instanteAtual) {
+    // Verifica a agua
+    if (getAguaSolo() >= morre_agua_solo_maior) {
+        if (getLastInstanceNoWater() == -1)
+            setLastIntanceNoWater(instanteAtual);
+        else if (std::abs(instanteAtual - getLastInstanceNoWater()) >= morre_agua_solo_instantes){}
+            return true; // Morto por excesso de agua
+    } else {
+        setLastIntanceNoWater(-1);
+    }
+    // verifica os nutrientes
+    if (getNutrientesSolo() <= morre_nutrientes_solo_menor) {
+        if (getLastInstanceNoNutri() == -1)
+            setLastIntanceNoNutri(instanteAtual);
+        else if (std::abs(instanteAtual - getLastInstanceNoNutri()) >= morre_nutrientes_solo_menor) {
+            return true; // Morreu por falta de nutrientes
+        }
 
-    return false;
+    } else {
+        setLastIntanceNoNutri(-1);
+    }
+    return false; // Ainda vivo
 }
 
 bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
-
+    if (getAgua() >= multiplica_agua_maior && getNutrientes() >= multiplica_nutrientes_maior && !expanded) {
+        expanded=!expanded;
+        return true;
+    }
     return false;
 }
+
+
+
 void Cacto::alimentar() {
+    const float temp = static_cast<float>(getAguaSolo()) * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
+    tirarDoSoloAgua(static_cast<int>(temp));
+    tirarDoSoloNutrientes(absorcao_nutrientes);
 
 }
 

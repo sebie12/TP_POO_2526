@@ -4,6 +4,8 @@
 
 #ifndef TP_POO_2526_PLANTA_H
 #define TP_POO_2526_PLANTA_H
+#include <string>
+#include <sstream>
 #include <array>
 #include <memory>
 #include "BocadoDoSolo.h"
@@ -22,7 +24,6 @@ class Planta {
         ERVA = 'e',
         PLANTAEXOTICA = 'x',
         ROSEIRA = 'r',
-        RAIZPE = '/',
         NONE = 'n'
     };
     static Planta * createPlant(BocadoDoSolo * sitio, char type); // Função statica para a criação das plantas
