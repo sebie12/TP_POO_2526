@@ -24,10 +24,18 @@ public:
     Jardim(int linhas, int colunas);
     ~Jardim();
 
+    enum acoesBocado {
+        NONE = 0,
+        ALIVE = 1,
+        DEAD = 2,
+        EXPAND = 3,
+        ROSEIRAVIZINHOS = 4,
+        PLANTAEXOTICAEXPAND = 5
+    };
+
     void iterate(int instante) const;
     void processaCambio(int tipo, int linha, int col) const;
     void expand(int linha, int col) const;
-    void expandPE(int linha, int col) const;
     bool hasFullViznhos(int linha, int col) const;
     std::array<int,4> verificaLimites(int linha, int col) const;
     std::string getDataFromBocado(int i, int j) const;
