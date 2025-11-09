@@ -3,7 +3,7 @@
 //
 
 #include "Roseira.h"
-Roseira::Roseira(BocadoDoSolo *sitio) : Planta(sitio, inicial_agua, inicial_nutrientes){}
+Roseira::Roseira() : Planta(inicial_agua, inicial_nutrientes){}
 
 char Roseira::getId() const {
     return id;

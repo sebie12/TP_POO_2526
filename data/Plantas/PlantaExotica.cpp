@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-PlantaExotica::PlantaExotica(BocadoDoSolo *sitio) : Planta(sitio, 0, 0), nRaizes(0){
+PlantaExotica::PlantaExotica() : Planta(0, 0), nRaizes(0){
 
 }
 PlantaExotica::~PlantaExotica() = default;

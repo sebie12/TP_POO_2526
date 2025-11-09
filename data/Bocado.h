@@ -16,14 +16,14 @@ class Planta;
 class Jardineiro;
 class Ferramenta;
 
-class BocadoDoSolo {
+class Bocado {
     std::unique_ptr<Planta> planta;
     std::shared_ptr<Jardineiro> jardineiro;
     std::shared_ptr<Ferramenta> ferramenta;
     int agua, nutrientes;
 public:
-    BocadoDoSolo(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
-    ~BocadoDoSolo();
+    Bocado(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
+    ~Bocado();
     int iterate(int instante);
     std::string toString()const;
 
@@ -46,7 +46,7 @@ public:
     char getIdFromPlant()const;
     char getIdForPrint()const;
 
-    BocadoDoSolo* operator>>(const BocadoDoSolo* outro);
+    Bocado* operator>>(const Bocado* outro);
 
     // Ferramenta Logic
     void newFerramenta(char tipo);

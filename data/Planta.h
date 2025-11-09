@@ -8,16 +8,15 @@
 #include <sstream>
 #include <array>
 #include <memory>
-#include "BocadoDoSolo.h"
+#include "Bocado.h"
 
-class BocadoDoSolo;
+class Bocado;
 
 class Planta {
     int lastInstanceNoWater, lastInstanceNoNutri;
     int aguaAtual, nutriAtual;
-    BocadoDoSolo*solo;
  public:
-    Planta(BocadoDoSolo* sitio,int agua, int nutrientes);
+    Planta(int agua, int nutrientes);
     virtual ~Planta() = default;
     enum plantTypes{
         CACTO = 'c',
@@ -26,20 +25,16 @@ class Planta {
         ROSEIRA = 'r',
         NONE = 'n'
     };
-    static std::unique_ptr<Planta> createPlant(BocadoDoSolo * sitio, char type); // Função statica para a criação das plantas
+    static std::unique_ptr<Planta> createPlant(char type); // Função statica para a criação das plantas
 
-    virtual int pasaInstante(int instante) = 0; // virtual pq vai ser mudada em cada filho
-    virtual bool verificaMorte(int nInstantes) = 0;
+    virtual int verificaMorte(int aguaSolo, int nutriSolo, int nInstantes, int & outNutrientes) = 0;
     virtual bool verificaExpansao(int agua, int nutrientes, int instanteAtual) = 0; // Verifica se a planta vai se expandir num bocado vizinho
     virtual char getId() const = 0;
-    virtual void alimentar() = 0;
+    virtual int alimentar(int aguaSolo, int nutriSolo, int & outNutrientes) = 0;
     // acabam as virtuais
 
     int getAgua()const;
     int getNutrientes()const;
-
-    int getAguaSolo()const;
-    int getNutrientesSolo()const;
 
     int tirarDoSoloAgua(int agua);
     int tirarDoSoloNutrientes(int nutrientes);

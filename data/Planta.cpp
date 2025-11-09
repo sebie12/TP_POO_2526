@@ -12,19 +12,19 @@
 class Cacto;
 class Erva;
 
-Planta::Planta(BocadoDoSolo * sitio,const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), aguaAtual(agua), nutriAtual(nutrientes), solo(sitio){
+Planta::Planta(const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), aguaAtual(agua), nutriAtual(nutrientes){
 }
 
-std::unique_ptr<Planta> Planta::createPlant(BocadoDoSolo * sitio, const char type) {
+std::unique_ptr<Planta> Planta::createPlant( const char type) {
     switch (type) {
         case Planta::CACTO:
-            return std::make_unique<Cacto>(sitio);
+            return std::make_unique<Cacto>();
         case Planta::ERVA:
-            return std::make_unique<Erva>(sitio);
+            return std::make_unique<Erva>();
         case Planta::ROSEIRA:
-            return std::make_unique<Roseira>(sitio);
+            return std::make_unique<Roseira>();
         case Planta::PLANTAEXOTICA:
-            return std::make_unique<PlantaExotica>(sitio);
+            return std::make_unique<PlantaExotica>();
         default:
             return nullptr;
     }
@@ -74,14 +74,6 @@ void Planta::setAgua(const int agua) {
 
 void Planta::setNutri(const int nutri) {
     nutriAtual = nutri;
-}
-
-
-int Planta::getAguaSolo() const {
-    return solo->getAgua();
-}
-int Planta::getNutrientesSolo() const {
-    return solo->getNutrientes();
 }
 
 int Planta::getAgua() const {

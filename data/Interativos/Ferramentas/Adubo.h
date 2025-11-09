@@ -16,7 +16,7 @@ class Adubo final : public Ferramenta {
 public:
     Adubo();
     ~Adubo() override;
-    void instante(BocadoDoSolo*posAtual) override;
+    void instante(Bocado*posAtual) override;
 };
 
 

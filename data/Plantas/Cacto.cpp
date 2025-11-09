@@ -6,43 +6,38 @@
 
 // EM PRINCIPIO ACABADO
 
-Cacto::Cacto(BocadoDoSolo * sitio) : Planta(sitio,0,0), expanded(false){}
-Cacto::Cacto(BocadoDoSolo * sitio, const int agua, const int nutrientes): Planta(sitio,agua,nutrientes), expanded(false){}
+Cacto::Cacto() : Planta(0,0), expanded(false){}
+Cacto::Cacto(const int agua, const int nutrientes): Planta(agua,nutrientes), expanded(false){}
 Cacto::~Cacto() = default;
 
 char Cacto::getId()const {
     return id;
 }
-int Cacto::pasaInstante(const int instante) {
-    //const array<int,2> temp = alimentar(); // Primeira posição a agua absorbida, segunda nutrientes absorbidos
-    alimentar();
-    if (verificaMorte(instante)) {
-        return getNutrientes();
-    }
-    return -1; // Planta está viva
-}
-bool Cacto::verificaMorte(const int instanteAtual) {
+
+int Cacto::verificaMorte(const int aguaSolo,const int nutriSolo, const int instanteAtual, int & outNutrientes) {
     // Verifica a agua
-    if (getAguaSolo() >= morre_agua_solo_maior) {
+    if (aguaSolo >= morre_agua_solo_maior) {
         if (getLastInstanceNoWater() == -1)
             setLastIntanceNoWater(instanteAtual);
-        else if (std::abs(instanteAtual - getLastInstanceNoWater()) >= morre_agua_solo_instantes){}
-            return true; // Morto por excesso de agua
+        else if (std::abs(instanteAtual - getLastInstanceNoWater()) >= morre_agua_solo_instantes) {
+            outNutrientes = getNutrientes();
+            return 0; // Morto por excesso de agua
+        }
     } else {
         setLastIntanceNoWater(-1);
     }
     // verifica os nutrientes
-    if (getNutrientesSolo() <= morre_nutrientes_solo_menor) {
+    if (nutriSolo <= morre_nutrientes_solo_menor) {
         if (getLastInstanceNoNutri() == -1)
             setLastIntanceNoNutri(instanteAtual);
         else if (std::abs(instanteAtual - getLastInstanceNoNutri()) >= morre_nutrientes_solo_menor) {
-            return true; // Morreu por falta de nutrientes
+            outNutrientes = getNutrientes();
+            return 0; // Morreu por falta de nutrientes
         }
-
     } else {
         setLastIntanceNoNutri(-1);
     }
-    return false; // Ainda vivo
+    return -1; // Ainda vivo
 }
 
 bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
@@ -53,12 +48,10 @@ bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
     return false;
 }
 
-
-
-void Cacto::alimentar() {
-    const float temp = static_cast<float>(getAguaSolo()) * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
-    tirarDoSoloAgua(static_cast<int>(temp));
-    tirarDoSoloNutrientes(absorcao_nutrientes);
+int Cacto::alimentar(const int aguaSolo, int nutriSolo, int & outNutrientes) {
+    const float temp = static_cast<float>(aguaSolo) * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
+    outNutrientes = absorcao_nutrientes;
+    return static_cast<int>(temp);
 
 }
 

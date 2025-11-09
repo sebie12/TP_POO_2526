@@ -12,7 +12,7 @@ class FerramentaZ final : public Ferramenta {
 public:
     FerramentaZ();
     ~FerramentaZ() override;
-    void instante(BocadoDoSolo*posAtual) override;
+    void instante(Bocado*posAtual) override;
 };
 
 

@@ -7,7 +7,7 @@
 Jardineiro::Jardineiro(): posAtual(nullptr), ferrEquipada(-1){}
 Jardineiro::~Jardineiro() = default;
 
-void Jardineiro::newPosicao(BocadoDoSolo *posNova) {
+void Jardineiro::newPosicao(Bocado *posNova) {
     posAtual = posNova;
 }
 void Jardineiro::equipaFerramenta(const int id) {

@@ -5,7 +5,7 @@
 #ifndef TP_POO_2526_JARDINEIRO_H
 #define TP_POO_2526_JARDINEIRO_H
 #include "Ferramenta.h"
-#include "../BocadoDoSolo.h"
+#include "../Bocado.h"
 #include "Settings.h"
 
 class Ferramenta;
@@ -16,13 +16,13 @@ class Jardineiro {
     static constexpr int max_plantacoes = Settings::Jardineiro::max_plantacoes;
     static constexpr int max_colheitas = Settings::Jardineiro::max_colheitas;
 // Acabam as constantes
-    BocadoDoSolo * posAtual;
+    Bocado * posAtual;
     Ferramenta ** ferr{}; // Array de ponteiros para ferramentas
     int ferrEquipada;
 public:
     Jardineiro();
     ~Jardineiro();
-    void newPosicao(BocadoDoSolo * posNova);
+    void newPosicao(Bocado * posNova);
     void pegaFerramenta(const std::shared_ptr<Ferramenta>& novaFerramenta);
     void equipaFerramenta(int id);
     void descartaFerramenta();

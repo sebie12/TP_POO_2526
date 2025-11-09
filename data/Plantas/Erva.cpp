@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-Erva::Erva(BocadoDoSolo * sitio): Planta(sitio,inicial_agua,inicial_nutrientes) {
+Erva::Erva(): Planta(inicial_agua,inicial_nutrientes) {
     instanteNascimento = -1;
     ultimaExpansao = 0;
 }

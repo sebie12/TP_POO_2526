@@ -15,7 +15,7 @@ class Regador final : public Ferramenta{
 public:
     Regador();
     ~Regador() override;
-    void instante(BocadoDoSolo*posAtual) override;
+    void instante(Bocado*posAtual) override;
 };
 
 

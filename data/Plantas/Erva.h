@@ -6,10 +6,10 @@
 #define TP_POO_2526_ERVA_H
 #include "Settings.h"
 #include "data/Planta.h"
-#include "../BocadoDoSolo.h"
+#include "../Bocado.h"
 
 
-class Erva : public Planta{
+class Erva final : public Planta{
     static constexpr char id = 'e';
     static constexpr int inicial_agua = Settings::ErvaDaninha::inicial_agua ;
     static constexpr int inicial_nutrientes = Settings::ErvaDaninha::inicial_nutrientes;
@@ -24,7 +24,7 @@ class Erva : public Planta{
     int instanteNascimento, ultimaExpansao;
     // ------------------
 public:
-    explicit Erva(BocadoDoSolo * sitio);
+    explicit Erva();
     ~Erva() override;
     char getId() const override;
     int pasaInstante(int instante) override;

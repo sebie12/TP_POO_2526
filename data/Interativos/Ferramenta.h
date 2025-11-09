@@ -6,7 +6,7 @@
 #define TP_POO_2526_FERRAMENTA_H
 #include <memory>
 
-#include "data/BocadoDoSolo.h"
+#include "data/Bocado.h"
 
 
  class Ferramenta {
@@ -23,7 +23,7 @@ public:
         FERRAMENTAZ = 'z'
     };
     explicit Ferramenta(char nome);
-    virtual void instante(BocadoDoSolo * posAtual) = 0; // Está igual a 0 pq só vai ser definida nos filhos
+    virtual void instante(Bocado * posAtual) = 0; // Está igual a 0 pq só vai ser definida nos filhos
     char getNome() const;
     int getId() const;
     bool getEmpty() const; // Verifica se ja se esgotou o conteudo ou se é inutil (não aplica na tesoura)

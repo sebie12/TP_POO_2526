@@ -11,7 +11,6 @@
 // Absorve 5% dos nutrientes e 10% da agua em cada bocado
 // Morre: se não conseguir expandir pelo menos 3 raizes em 5 turnos, ou se receber 0 de agua ou 0 de nutrientes
 class Planta;
-class BocadoDoSolo;
 class RaizPlantaExotica;
 
 
@@ -19,7 +18,7 @@ class PlantaExotica final : public Planta{
     static constexpr char id = 'z';
     int nRaizes;
 public:
-    explicit PlantaExotica(BocadoDoSolo * sitio);
+    explicit PlantaExotica();
     ~PlantaExotica() override;
     char getId() const override;
     int pasaInstante(int instante) override;

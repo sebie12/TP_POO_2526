@@ -11,7 +11,7 @@ class TesouraDePoda final : public Ferramenta {
 public:
     TesouraDePoda();
     ~TesouraDePoda() override;
-    void instante(BocadoDoSolo*posAtual) override;
+    void instante(Bocado*posAtual) override;
 };
 
 

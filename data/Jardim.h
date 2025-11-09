@@ -4,7 +4,7 @@
 
 #ifndef TP_POO_2526_JARDIM_H
 #define TP_POO_2526_JARDIM_H
-#include "BocadoDoSolo.h"
+#include "Bocado.h"
 #include "Settings.h"
 
 
@@ -16,7 +16,7 @@ class Jardim {
 
     // Matrix para os "bocados do solo"
 
-    BocadoDoSolo ***area;
+    Bocado ***area;
     int nLines;
     int nCols;
 
@@ -40,6 +40,7 @@ public:
     std::array<int,4> verificaLimites(int linha, int col) const;
     std::string getDataFromBocado(int i, int j) const;
     std::string toString() const;
+    void sowPlant(char type) const;
     void genRandPlants() const;
 
 };

@@ -7,7 +7,7 @@
 Adubo::Adubo() : Ferramenta(Ferramenta::ADUBO), nutrientesRestantes(capacidade) {}
 Adubo::~Adubo() = default;
 
-void Adubo::instante(BocadoDoSolo*posAtual) { // Esta função tem de ser redeclarada em cada ferramenta (usando override)
+void Adubo::instante(Bocado*posAtual) { // Esta função tem de ser redeclarada em cada ferramenta (usando override)
     if (nutrientesRestantes - dose >= 0) {
         nutrientesRestantes -= dose;
         posAtual->ganhaNutrientes(dose);
