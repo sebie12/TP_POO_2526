@@ -21,10 +21,10 @@ public:
     explicit PlantaExotica();
     ~PlantaExotica() override;
     char getId() const override;
-    int pasaInstante(int instante) override;
-    bool verificaMorte(int instanteAtual) override;
+    int verificaMorte(int aguaSolo, int nutriSolo, int instanteAtual, int & outNutrientes) override;
     bool verificaExpansao(int agua, int nutrientes, int instanteAtual) override;
-    void alimentar() override;
+    int alimentar(int aguaSolo, int nutriSolo, int & outNutrientes) override;
+    int getAguaNutriMorte(int & outNutrientes) const override;
 
     void addRaiz();
 

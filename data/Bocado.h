@@ -17,7 +17,7 @@ class Jardineiro;
 class Ferramenta;
 
 class Bocado {
-    std::unique_ptr<Planta> planta;
+    std::shared_ptr<Planta> planta;
     std::shared_ptr<Jardineiro> jardineiro;
     std::shared_ptr<Ferramenta> ferramenta;
     int agua, nutrientes;
@@ -35,7 +35,7 @@ public:
     int ganhaAgua(int unidades);
     int ganhaNutrientes(int unidades);
 
-    bool newPlant(std::unique_ptr<Planta>);
+    bool newPlant(const std::shared_ptr<Planta>&);
     bool hasPlant()const;
     void feedPlanta(int novaAgua, int novosNutrientes) const;
 

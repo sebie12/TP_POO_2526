@@ -14,7 +14,9 @@ class Simulador {
     Jardim *jardim;
     Jardim * copiaJardim; // Jardim para guardar copias
     int instante; // Define on instante atual
+    int step = 1;
     bool terminou = false;
+
 
     static std::string leComandoFicheiro(const std::string &filename); // lê comandos de ficheiro
     static int getNumValueFromChar(char arg);

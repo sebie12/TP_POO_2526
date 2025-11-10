@@ -11,29 +11,26 @@ PlantaExotica::PlantaExotica() : Planta(0, 0), nRaizes(0){
 }
 PlantaExotica::~PlantaExotica() = default;
 
-
-
 bool PlantaExotica::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
     return false;
 }
 
-int PlantaExotica::pasaInstante(const int instante) {
-
-    return -1;
-}
-
-bool PlantaExotica::verificaMorte(const int instanteAtual) {
-
-    return false;
+int PlantaExotica::verificaMorte(int aguaSolo, int nutriSolo, int instanteAtual, int & outNutrientes) {
+    return 0;
 }
 
 char PlantaExotica::getId() const {
     return id;
 }
 
-
-void PlantaExotica::alimentar() {
+int PlantaExotica::alimentar(int aguaSolo, int nutriSolo, int & outNutrientes) {
+    outNutrientes = 0;
+    return 0;
 }
+int PlantaExotica::getAguaNutriMorte(int &outNutrientes) const {
+    return 0;
+}
+
 void PlantaExotica::addRaiz() {
     nRaizes++;
 }

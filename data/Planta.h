@@ -25,7 +25,7 @@ class Planta {
         ROSEIRA = 'r',
         NONE = 'n'
     };
-    static std::unique_ptr<Planta> createPlant(char type); // Função statica para a criação das plantas
+    static std::shared_ptr<Planta> createPlant(char type); // Função statica para a criação das plantas
 
     virtual int verificaMorte(int aguaSolo, int nutriSolo, int nInstantes, int & outNutrientes) = 0;
     virtual bool verificaExpansao(int agua, int nutrientes, int instanteAtual) = 0; // Verifica se a planta vai se expandir num bocado vizinho
@@ -37,8 +37,6 @@ class Planta {
     int getAgua()const;
     int getNutrientes()const;
 
-    int tirarDoSoloAgua(int agua);
-    int tirarDoSoloNutrientes(int nutrientes);
     int addNutrientes(int nutrientes);
     int addAgua(int agua);
     int perderAgua(int agua);

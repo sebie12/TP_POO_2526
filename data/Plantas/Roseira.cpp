@@ -9,8 +9,8 @@ char Roseira::getId() const {
     return id;
 }
 int Roseira::alimentar(const int aguaSolo, const int nutriSolo, int & outNutrientes) {
-    const auto aguaAbsorvida = std::min(absorcao_agua, aguaSolo);
-    outNutrientes = std::min(absorcao_nutrientes, nutriSolo);
+    const auto aguaAbsorvida = abs(absorcao_agua - aguaSolo);
+    outNutrientes = abs(absorcao_nutrientes - aguaSolo);
     addAgua(aguaAbsorvida);
     addNutrientes(outNutrientes);
     return aguaAbsorvida;

@@ -11,12 +11,13 @@ Erva::Erva(): Planta(inicial_agua,inicial_nutrientes) {
     ultimaExpansao = 0;
 }
 Erva::~Erva() = default;
+
 int Erva::getAguaNutriMorte(int & outNutrientes) const {
-    outNutrientes = getNutrients();
-    return 0; // Morre sem deixar agua
+    outNutrientes = 0;
+    return 0; // Morre sem nada
 }
 
-bool Erva::verificaMorte(const int instanteAtual) {
+int Erva::verificaMorte(int aguaSolo, int nutriSolo, const int instanteAtual, int &outNutrientes) {
     if (instanteNascimento == -1) // está a -1 quando é criado
         instanteNascimento = instanteAtual; // Define o seu instante de nascimento
     return instanteAtual - instanteNascimento == morre_instantes ; // se a diferença é igual 60 (se tem 60 instantes vivo) morre
@@ -34,9 +35,10 @@ char Erva::getId() const {
     return id;
 }
 
-void Erva::alimentar() {
-    const auto tempAgua = tirarDoSoloAgua(absorcao_agua);
-    const auto tempNutrientes = tirarDoSoloNutrientes(absorcao_nutrientes);
-    addAgua(tempAgua);addNutrientes(tempNutrientes);
+
+int Erva::alimentar(int aguaSolo, int nutriSolo, int &outNutrientes) {
+    outNutrientes = absorcao_nutrientes;
+    return absorcao_agua;
 }
+
 

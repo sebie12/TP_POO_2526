@@ -6,6 +6,7 @@
 #define TP_POO_2526_ROSEIRA_H
 #include "Roseira.h"
 #include "Roseira.h"
+#include "Roseira.h"
 #include "Settings.h"
 #include "data/Planta.h"
 
@@ -16,7 +17,7 @@ class Roseira final : public Planta{
     static constexpr int perda_agua = Settings::Roseira::perda_agua;
     static constexpr int perda_nutrientes = Settings::Roseira::perda_nutrientes;
     static constexpr int absorcao_agua = Settings::Roseira::absorcao_agua;
-    static constexpr int absorcao_nutrientes = 8;
+    static constexpr int absorcao_nutrientes = Settings::Roseira::absorcao_nutrientes;
     static constexpr int morre_agua_menor = Settings::Roseira::morre_agua_menor;
     static constexpr int morre_nutrientes_menor = Settings::Roseira::morre_nutrientes_menor;
     static constexpr int morre_nutrientes_maior = Settings::Roseira::morre_nutrientes_maior;

@@ -15,30 +15,19 @@ class Erva;
 Planta::Planta(const int agua, const int nutrientes) : lastInstanceNoWater(-1), lastInstanceNoNutri(-1), aguaAtual(agua), nutriAtual(nutrientes){
 }
 
-std::unique_ptr<Planta> Planta::createPlant( const char type) {
+std::shared_ptr<Planta> Planta::createPlant( const char type) {
     switch (type) {
         case Planta::CACTO:
-            return std::make_unique<Cacto>();
+            return std::make_shared<Cacto>();
         case Planta::ERVA:
-            return std::make_unique<Erva>();
+            return std::make_shared<Erva>();
         case Planta::ROSEIRA:
-            return std::make_unique<Roseira>();
+            return std::make_shared<Roseira>();
         case Planta::PLANTAEXOTICA:
-            return std::make_unique<PlantaExotica>();
+            return std::make_shared<PlantaExotica>();
         default:
             return nullptr;
     }
-}
-
-int Planta::tirarDoSoloAgua(const int agua) {
-    const int temp = solo->perdeAgua(agua);
-    aguaAtual += temp;
-    return temp;
-}
-int Planta::tirarDoSoloNutrientes(const int nutrientes) {
-    const int temp = solo->perdeNutrientes(nutrientes);
-    nutriAtual += temp;
-    return temp;
 }
 
 int Planta::addAgua(const int agua) {

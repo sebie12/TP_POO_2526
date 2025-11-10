@@ -37,7 +37,7 @@ void Jardim::iterate(const int instante) const {
     }
 }
 void Jardim::sowPlant(const char type, const int linha, const int col) const {
-    unique_ptr<Planta> temp;
+    shared_ptr<Planta> temp;
     switch (type) {
         case Planta::CACTO:
             temp = Planta::createPlant(Planta::plantTypes::CACTO);
@@ -47,12 +47,12 @@ void Jardim::sowPlant(const char type, const int linha, const int col) const {
             break;
         case Planta::ERVA:
             temp = Planta::createPlant(Planta::plantTypes::ROSEIRA);
-            /*case Planta::PLANTAEXOTICA:
-                 temp = Planta::createPlant(Planta::plantTypes::PLANTAEXOTICA);*/
+        /*case Planta::PLANTAEXOTICA:
+             temp = Planta::createPlant(Planta::plantTypes::PLANTAEXOTICA);*/
         default:
             break;
     }
-    area[linha][col]->newPlant(std::move(temp));
+    area[linha][col]->newPlant(temp);
 }
 
 void Jardim::processaCambio(const int tipo, const int linha, const int col) const {
@@ -146,8 +146,20 @@ std::string Jardim::getDataFromBocado(const int i, const int j) const { // Esta 
 
 string Jardim::toString() const {
     ostringstream oss;
-    for (int i = 0; i < nLines; i++) {
-        for (int j = 0; j < nCols; j++) {
+    for (int i = -1; i < nLines; i++) {
+       if (i == -1) {
+            oss << "  ";
+            for (int j = 0; j < nCols; j++) {
+                oss << static_cast<char>('A' + j) << ' ';
+            }
+            oss << endl;
+            continue;
+        }
+        for (int j = -1; j < nCols; j++) {
+            if (j == -1) {
+                oss << static_cast<char>('A' + i) << ' ';
+                continue;
+            }
             oss << area[i][j]->getIdForPrint() << ' ';
         }
         oss << endl;
@@ -155,7 +167,7 @@ string Jardim::toString() const {
     return oss.str();
 }
 void Jardim::genRandPlants() const {
-    unique_ptr<Planta> temp;
+    shared_ptr<Planta> temp;
     for (int i = 0; i < nLines; i++) {
         for (int j = 0; j < nCols; j++) {
             switch (Rand::generate(0, 5)) {
@@ -172,7 +184,7 @@ void Jardim::genRandPlants() const {
                 default:
                     break;
             }
-            area[i][j]->newPlant(std::move(temp));
+            area[i][j]->newPlant(temp);
         }
     }
 }

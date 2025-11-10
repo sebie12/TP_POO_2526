@@ -34,8 +34,8 @@ int Bocado::iterate(const int instante) {
         }
         // Alimenta a planta
         tempAgua = planta->alimentar(getAgua(), getNutrientes(), tempNutri);
-        perdeAgua(planta->tirarDoSoloAgua(tempAgua));
-        perdeNutrientes(planta->tirarDoSoloNutrientes(tempNutri));
+        perdeAgua(planta->addAgua(tempAgua));
+        perdeNutrientes(planta->addNutrientes(tempNutri));
 
         if (planta->getId() == Planta::ROSEIRA) {
             return Jardim::ROSEIRAVIZINHOS;
@@ -116,12 +116,10 @@ char Bocado::getIdFromPlant() const {
         return planta->getId();
     return 'n';
 }
-bool Bocado::newPlant(std::unique_ptr<Planta> newPlanta) {
+bool Bocado::newPlant(const std::shared_ptr<Planta>& newPlanta) {
     if (planta != nullptr)
         return false;
-    if (newPlanta->getId() != Planta::ERVA)
-        return false; // Honestamente não encontrei outro sitio aonde por esta restrição
-    planta = std::move(newPlanta);
+    planta = newPlanta;
     return true;
 }
 

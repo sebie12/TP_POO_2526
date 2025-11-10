@@ -7,6 +7,7 @@
 #include "Bocado.h"
 #include "Settings.h"
 
+class Bocado;
 
 class Jardim {
     static constexpr int agua_min = Settings::Jardim::agua_min;
