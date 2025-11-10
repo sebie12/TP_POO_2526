@@ -28,8 +28,7 @@ public:
     std::string toString()const;
 
     // PLant Logic
-    void feedFromDeadPlant(int aguaDaPlanta, int nutriDaPlanta);
-    void killPlanta();
+    void killPlanta(int aguaRetirada, int nutrientesRetirados);
 
     int perdeAgua(int unidades);
     int perdeNutrientes(int unidades);
@@ -46,11 +45,13 @@ public:
     char getIdFromPlant()const;
     char getIdForPrint()const;
 
+    int getAguaNutriMorte(int & outNutrientes) const;
+
     Bocado* operator>>(const Bocado* outro);
 
     // Ferramenta Logic
     void newFerramenta(char tipo);
-    Ferramenta * removeFerramenta();
+   std::shared_ptr<Ferramenta> removeFerramenta();
 
 
 };

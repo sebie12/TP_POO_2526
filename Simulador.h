@@ -17,6 +17,8 @@ class Simulador {
     bool terminou = false;
 
     static std::string leComandoFicheiro(const std::string &filename); // lê comandos de ficheiro
+    static int getNumValueFromChar(char arg);
+
     bool interpretaComando(std::istringstream &iss);  // valida e executa comandos
     static void mostraAjuda() ;           // imprime lista de comandos
 public:

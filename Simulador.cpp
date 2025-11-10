@@ -145,6 +145,13 @@ bool Simulador::interpretaComando(std::istringstream& iss) {
         if (!(iss >> token1 >> token2)) return false; // Precisa de 2 argumentos
         std::cout << "(Meta 1) Plantaria tipo " << token2
                   << " em " << token1 << ".\n";
+        auto line = getNumValueFromChar(token1[0]);
+        auto col = getNumValueFromChar(token1[1]);
+        if (line < 0 || col < 0 || line >= jardim->getLinhas() || col >= jardim->getColunas()) {
+            std::cout << "Coordenadas invalidas.\n";
+            return false;
+        }
+        jardim->sowPlant(token1[0], line, col);
         return true;
     }
 
@@ -235,3 +242,8 @@ void Simulador::mostraAjuda() {
 std::string Simulador::leComandoFicheiro(const std::string &filename) {
     return "Incompleto";
 }
+int Simulador::getNumValueFromChar(const char arg) {
+    const auto argMinus = tolower(arg);
+        return argMinus - 'a';
+}
+

@@ -40,8 +40,11 @@ public:
     std::array<int,4> verificaLimites(int linha, int col) const;
     std::string getDataFromBocado(int i, int j) const;
     std::string toString() const;
-    void sowPlant(char type) const;
+    void sowPlant(char type, int linha, int col) const;
     void genRandPlants() const;
+
+    int getLinhas() const;
+    int getColunas() const;
 
 };
 

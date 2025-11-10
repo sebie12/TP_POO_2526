@@ -52,19 +52,21 @@ void Jardim::sowPlant(const char type, const int linha, const int col) const {
         default:
             break;
     }
-    area[i][j]->newPlant(std::move(temp));
+    area[linha][col]->newPlant(std::move(temp));
 }
 
 void Jardim::processaCambio(const int tipo, const int linha, const int col) const {
     if (tipo == Jardim::EXPAND)
             expand(linha, col);
     else if (tipo == Jardim::ROSEIRAVIZINHOS) {
-        if (hasFullViznhos(linha, col))
-            area[linha][col]->killPlanta();
+        if (hasFullViznhos(linha, col)) {
+            int outNutrientes = 0;
+            const auto tempAgua = area[linha][col]->getAguaNutriMorte(outNutrientes);
+            area[linha][col]->killPlanta(tempAgua, outNutrientes);
+        }
     }
     else if (tipo == Jardim::PLANTAEXOTICAEXPAND) {
         cout << "Expanding PE at " << linha << "," << col << endl;
-        expandPE(linha, col);
     }
 }
 
@@ -93,7 +95,8 @@ void Jardim::expand(const int linha, const int col) const {
     for (int i = 0; i < 4; i++) {
         const int linhaNova = i < 2 ? linha + directions[i] : linha;
         const int colunaNova = i < 2 ? col : col + directions[i];
-        if (area[linhaNova][colunaNova]->newPlant(tipo)) {
+        auto temp = Planta::createPlant(tipo);
+        if (area[linhaNova][colunaNova]->newPlant(std::move(temp))) {
             // Se a planta não for criada continua (retorna false nessa situação)
             *area[linha][col]>>area[linhaNova][colunaNova]; // Vai passar a metade da agua duma planta para a outra
             return;
@@ -172,6 +175,13 @@ void Jardim::genRandPlants() const {
             area[i][j]->newPlant(std::move(temp));
         }
     }
+}
+
+int Jardim::getLinhas() const {
+    return nLines;
+}
+int Jardim::getColunas() const {
+    return nCols;
 }
 
 

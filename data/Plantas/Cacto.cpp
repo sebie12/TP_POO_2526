@@ -14,14 +14,19 @@ char Cacto::getId()const {
     return id;
 }
 
+int Cacto::getAguaNutriMorte(int & outNutrientes) const {
+    outNutrientes = getNutrientes();
+    return 0; // Morto por excesso de agua
+}
+
+
 int Cacto::verificaMorte(const int aguaSolo,const int nutriSolo, const int instanteAtual, int & outNutrientes) {
     // Verifica a agua
     if (aguaSolo >= morre_agua_solo_maior) {
         if (getLastInstanceNoWater() == -1)
             setLastIntanceNoWater(instanteAtual);
         else if (std::abs(instanteAtual - getLastInstanceNoWater()) >= morre_agua_solo_instantes) {
-            outNutrientes = getNutrientes();
-            return 0; // Morto por excesso de agua
+            return getAguaNutriMorte(outNutrientes);; // Morto por excesso de agua
         }
     } else {
         setLastIntanceNoWater(-1);
@@ -31,8 +36,7 @@ int Cacto::verificaMorte(const int aguaSolo,const int nutriSolo, const int insta
         if (getLastInstanceNoNutri() == -1)
             setLastIntanceNoNutri(instanteAtual);
         else if (std::abs(instanteAtual - getLastInstanceNoNutri()) >= morre_nutrientes_solo_menor) {
-            outNutrientes = getNutrientes();
-            return 0; // Morreu por falta de nutrientes
+            return getAguaNutriMorte(outNutrientes); // Morreu por falta de nutrientes
         }
     } else {
         setLastIntanceNoNutri(-1);
@@ -54,6 +58,8 @@ int Cacto::alimentar(const int aguaSolo, int nutriSolo, int & outNutrientes) {
     return static_cast<int>(temp);
 
 }
+
+
 
 
 

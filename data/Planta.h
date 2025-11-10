@@ -31,6 +31,7 @@ class Planta {
     virtual bool verificaExpansao(int agua, int nutrientes, int instanteAtual) = 0; // Verifica se a planta vai se expandir num bocado vizinho
     virtual char getId() const = 0;
     virtual int alimentar(int aguaSolo, int nutriSolo, int & outNutrientes) = 0;
+    virtual int getAguaNutriMorte(int & nutrientes) const = 0;
     // acabam as virtuais
 
     int getAgua()const;

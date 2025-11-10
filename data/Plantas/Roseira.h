@@ -30,11 +30,11 @@ class Roseira final : public Planta{
     // ------------------
 public:
     explicit Roseira();
-    int pasaInstante(int instante) override; // virtual pq vai ser mudada em cada filho
-    bool verificaMorte(int nInstantes) override;
-    bool verificaExpansao(int agua, int nutrientes, int instanteAtual) override; // Verifica se a planta vai se expandir num bocado vizinho
-    void alimentar()override;
     char getId() const override;
+    int verificaMorte(int aguaSolo, int nutriSolo, int instanteAtual, int & outNutrientes) override;
+    bool verificaExpansao(int agua, int nutrientes, int instanteAtual) override;
+    int alimentar(int aguaSolo, int nutriSolo, int & outNutrientes) override;
+    int getAguaNutriMorte(int & outNutrientes) const override;
 
 };
 

@@ -25,18 +25,13 @@ int Bocado::iterate(const int instante) {
             if (ferramenta->getEmpty()) {
 
             }
-
         }
         int tempNutri = 0;
         int tempAgua = planta->verificaMorte(getAgua(), getNutrientes(), instante, tempNutri);
-
         if (tempAgua != -1) {
-            ganhaAgua(tempAgua);
-            ganhaNutrientes(tempNutri);
-            killPlanta();// Se a planta morrer
+            killPlanta(tempAgua, tempNutri);// Se a planta morrer
             return Jardim::DEAD;
-        } // Não morreu
-
+        }
         // Alimenta a planta
         tempAgua = planta->alimentar(getAgua(), getNutrientes(), tempNutri);
         perdeAgua(planta->tirarDoSoloAgua(tempAgua));
@@ -116,15 +111,6 @@ std::string Bocado::toString() const {
 
 // ----------------- Plant Logic -----------------------------
 
-void Bocado::feedFromDeadPlant(const int aguaDaPlanta, const int nutriDaPlanta) {
-    if (planta->getId() == Planta::CACTO) {
-        this->nutrientes += nutriDaPlanta;
-    }
-    else if (planta->getId() == Planta::ROSEIRA) {
-        this->agua += aguaDaPlanta/2;
-        this->nutrientes += nutriDaPlanta/2;
-    }
-}
 char Bocado::getIdFromPlant() const {
     if (planta!= nullptr)
         return planta->getId();
@@ -133,6 +119,8 @@ char Bocado::getIdFromPlant() const {
 bool Bocado::newPlant(std::unique_ptr<Planta> newPlanta) {
     if (planta != nullptr)
         return false;
+    if (newPlanta->getId() != Planta::ERVA)
+        return false; // Honestamente não encontrei outro sitio aonde por esta restrição
     planta = std::move(newPlanta);
     return true;
 }
@@ -152,7 +140,6 @@ Bocado *Bocado::operator>>(const Bocado *outro) {
     const int tempAgua = planta->getAgua() / 2;
     const int tempNutrientes = planta->getNutrientes() / 2;
 
-
     if (planta->getId() == Planta::CACTO) {
         planta->perderAgua(tempAgua);
         outro->planta->addAgua(tempAgua);
@@ -170,9 +157,14 @@ Bocado *Bocado::operator>>(const Bocado *outro) {
     return this;
 }
 
-void Bocado::killPlanta() {
-    feedFromDeadPlant(planta->getAgua(), planta->getNutrientes());
+void Bocado::killPlanta(const int aguaRetirada, const int nutrientesRetirados) {
+    ganhaAgua(aguaRetirada);
+    ganhaNutrientes(nutrientesRetirados);
     planta = nullptr;
+}
+
+int Bocado::getAguaNutriMorte(int &outNutrientes) const {
+    return planta->getAguaNutriMorte(outNutrientes);
 }
 
 //  ------------- Ferramenta Logic -----------------------------
