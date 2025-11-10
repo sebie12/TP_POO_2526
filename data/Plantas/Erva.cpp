@@ -11,13 +11,9 @@ Erva::Erva(): Planta(inicial_agua,inicial_nutrientes) {
     ultimaExpansao = 0;
 }
 Erva::~Erva() = default;
-
-int Erva::pasaInstante(const int instante) {
-    if (verificaMorte(instante)) {
-        return getNutrientes();
-    }
-    alimentar();
-    return -1; // Planta está viva
+int Erva::getAguaNutriMorte(int & outNutrientes) const {
+    outNutrientes = getNutrients();
+    return 0; // Morre sem deixar agua
 }
 
 bool Erva::verificaMorte(const int instanteAtual) {

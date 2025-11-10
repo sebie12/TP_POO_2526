@@ -16,8 +16,8 @@ int Roseira::alimentar(const int aguaSolo, const int nutriSolo, int & outNutrien
     return aguaAbsorvida;
 }
 int Roseira::getAguaNutriMorte(int & outNutrientes) const {
-    outNutrientes = getNutrientes();
-    return getAgua();
+    outNutrientes = getNutrientes()/2;
+    return getAgua()/2;
 }
 
 bool Roseira::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
@@ -25,8 +25,7 @@ bool Roseira::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
 }
 int Roseira::verificaMorte(int aguaSolo, int nutriSolo, int instanteAtual, int & outNutrientes) {
     if (getAgua() <= morre_agua_menor || getNutrientes() <= morre_nutrientes_menor || getNutrientes() >= morre_nutrientes_menor) {
-        outNutrientes = getNutrientes()/2;
-        return getAgua()/2; // Morreu
+        return getAguaNutriMorte(outNutrientes); // Morreu
     }
     return -1; // Ainda vivo
 }
