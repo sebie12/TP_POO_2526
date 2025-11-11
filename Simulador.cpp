@@ -30,8 +30,8 @@ void Simulador::run() {
         if (jardim != nullptr) {
             for (int i = 0; i < step; i++) {
                 jardim->iterate(instante);
+                instante ++;
             }
-            instante += step;
             step = 1;
         }
     }
@@ -147,8 +147,7 @@ bool Simulador::interpretaComando(std::istringstream& iss) {
             std::cout << "Coordenadas invalidas.\n";
             return false;
         }
-        jardim->sowPlant(token2[0], line, col);
-        std::cout << line << "," << col << "\n";
+        jardim->sowPlant(token2.at(0), line, col);
     }
 
     if (cmd == "larga") {

@@ -29,42 +29,46 @@ Jardim::~Jardim() {
     delete[] area;
 }
 
-void Jardim::iterate(const int instante) const {
+void Jardim::iterate(const int instante) {
     for (int i = 0; i < nLines; i++) {
         for (int j = 0; j < nCols; j++) {
             processaCambio(area[i][j]->iterate(instante), i, j);
         }
     }
 }
-void Jardim::sowPlant(const char type, const int linha, const int col) const {
+void Jardim::sowPlant(const char type, const int linha, const int col) {
     shared_ptr<Planta> temp;
     switch (type) {
         case Planta::CACTO:
             temp = Planta::createPlant(Planta::plantTypes::CACTO);
             break;
         case Planta::ROSEIRA:
-            temp = Planta::createPlant(Planta::plantTypes::ERVA);
+            temp = Planta::createPlant(Planta::plantTypes::ROSEIRA);
             break;
         case Planta::ERVA:
-            temp = Planta::createPlant(Planta::plantTypes::ROSEIRA);
+            temp = Planta::createPlant(Planta::plantTypes::ERVA);
+            break;
         /*case Planta::PLANTAEXOTICA:
              temp = Planta::createPlant(Planta::plantTypes::PLANTAEXOTICA);*/
         default:
+            temp = nullptr;
             break;
     }
     area[linha][col]->newPlant(temp);
 }
 
-void Jardim::processaCambio(const int tipo, const int linha, const int col) const {
-    if (tipo == Jardim::EXPAND)
-            expand(linha, col);
-    else if (tipo == Jardim::ROSEIRAVIZINHOS) {
+void Jardim::processaCambio(const int tipo, const int linha, const int col)  {
+    if (area[linha][col]->getIdFromPlant() == Planta::ROSEIRA) {
         if (hasFullViznhos(linha, col)) {
+            cout << "Roseira at " << linha << "," << col << " has full vizinhos!" << endl;
             int outNutrientes = 0;
             const auto tempAgua = area[linha][col]->getAguaNutriMorte(outNutrientes);
             area[linha][col]->killPlanta(tempAgua, outNutrientes);
+            return;
         }
     }
+    if (tipo == Jardim::EXPAND)
+            expand(linha, col);
     else if (tipo == Jardim::PLANTAEXOTICAEXPAND) {
         cout << "Expanding PE at " << linha << "," << col << endl;
     }
@@ -91,12 +95,19 @@ std::array<int, 4> Jardim::verificaLimites(const int linha, const int col) const
 void Jardim::expand(const int linha, const int col) const {
     const char tipo = area[linha][col]->getIdFromPlant();
     const auto directions = verificaLimites(linha, col); // left right up down
+    if (tipo == Planta::PLANTAEXOTICA) {
 
+    }
     for (int i = 0; i < 4; i++) {
         const int linhaNova = i < 2 ? linha + directions[i] : linha;
         const int colunaNova = i < 2 ? col : col + directions[i];
         auto temp = Planta::createPlant(tipo);
-        if (area[linhaNova][colunaNova]->newPlant(std::move(temp))) {
+        if (tipo == Planta::ROSEIRA) {
+            if (hasFullViznhos(linhaNova, colunaNova)) {
+                continue;
+            }
+        }
+        if (area[linhaNova][colunaNova]->newPlant(temp)) {
             // Se a planta não for criada continua (retorna false nessa situação)
             *area[linha][col]>>area[linhaNova][colunaNova]; // Vai passar a metade da agua duma planta para a outra
             return;
@@ -170,7 +181,7 @@ void Jardim::genRandPlants() const {
     shared_ptr<Planta> temp;
     for (int i = 0; i < nLines; i++) {
         for (int j = 0; j < nCols; j++) {
-            switch (Rand::generate(0, 5)) {
+            switch (Rand::generate(0, 10)) {
                 case 0:
                     temp = Planta::createPlant(Planta::plantTypes::CACTO);
                     break;
@@ -179,9 +190,11 @@ void Jardim::genRandPlants() const {
                     break;
                 case 2:
                      temp = Planta::createPlant(Planta::plantTypes::ROSEIRA);
+                    break;
                 /*case 3:
                      temp = Planta::createPlant(Planta::plantTypes::PLANTAEXOTICA);*/
                 default:
+                    temp = nullptr;
                     break;
             }
             area[i][j]->newPlant(temp);

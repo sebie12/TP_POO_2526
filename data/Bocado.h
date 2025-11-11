@@ -35,7 +35,7 @@ public:
     int ganhaAgua(int unidades);
     int ganhaNutrientes(int unidades);
 
-    bool newPlant(const std::shared_ptr<Planta>&);
+    bool newPlant(const std::shared_ptr<Planta>& newPlanta);
     bool hasPlant()const;
     void feedPlanta(int novaAgua, int novosNutrientes) const;
 

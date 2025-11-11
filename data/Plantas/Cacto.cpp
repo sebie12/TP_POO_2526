@@ -45,15 +45,14 @@ int Cacto::verificaMorte(const int aguaSolo,const int nutriSolo, const int insta
 }
 
 bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
-    if (getAgua() >= multiplica_agua_maior && getNutrientes() >= multiplica_nutrientes_maior && !expanded) {
-        expanded=!expanded;
+    if (getAgua() >= multiplica_agua_maior && getNutrientes() >= multiplica_nutrientes_maior) {
         return true;
     }
     return false;
 }
 
-int Cacto::alimentar(const int aguaSolo, int nutriSolo, int & outNutrientes) {
-    const float temp = static_cast<float>(aguaSolo) * (static_cast<float>(100 - absorcao_agua_percentagem)/100);
+int Cacto::instante(const int aguaSolo, int nutriSolo, int & outNutrientes) {
+    const float temp = static_cast<float>(aguaSolo) * (static_cast<float>(absorcao_agua_percentagem )/100);
     outNutrientes = absorcao_nutrientes;
     return static_cast<int>(temp);
 

@@ -34,14 +34,14 @@ public:
         PLANTAEXOTICAEXPAND = 5
     };
 
-    void iterate(int instante) const;
-    void processaCambio(int tipo, int linha, int col) const;
+    void iterate(int instante);
+    void processaCambio(int tipo, int linha, int col);
     void expand(int linha, int col) const;
     bool hasFullViznhos(int linha, int col) const;
     std::array<int,4> verificaLimites(int linha, int col) const;
     std::string getDataFromBocado(int i, int j) const;
     std::string toString() const;
-    void sowPlant(char type, int linha, int col) const;
+    void sowPlant(char type, int linha, int col);
     void genRandPlants() const;
 
     int getLinhas() const;

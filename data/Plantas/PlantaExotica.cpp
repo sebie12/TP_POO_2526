@@ -23,7 +23,7 @@ char PlantaExotica::getId() const {
     return id;
 }
 
-int PlantaExotica::alimentar(int aguaSolo, int nutriSolo, int & outNutrientes) {
+int PlantaExotica::instante(int aguaSolo, int nutriSolo, int & outNutrientes) {
     outNutrientes = 0;
     return 0;
 }

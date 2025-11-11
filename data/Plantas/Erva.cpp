@@ -20,7 +20,10 @@ int Erva::getAguaNutriMorte(int & outNutrientes) const {
 int Erva::verificaMorte(int aguaSolo, int nutriSolo, const int instanteAtual, int &outNutrientes) {
     if (instanteNascimento == -1) // está a -1 quando é criado
         instanteNascimento = instanteAtual; // Define o seu instante de nascimento
-    return instanteAtual - instanteNascimento == morre_instantes ; // se a diferença é igual 60 (se tem 60 instantes vivo) morre
+    if (instanteAtual - instanteNascimento == morre_instantes) {
+        return getAguaNutriMorte(outNutrientes);; // Morre por idade
+    }
+    return  -1;
 }
 
 bool Erva::verificaExpansao(int agua, int nutrientes, const int instanteAtual) {
@@ -36,7 +39,7 @@ char Erva::getId() const {
 }
 
 
-int Erva::alimentar(int aguaSolo, int nutriSolo, int &outNutrientes) {
+int Erva::instante(int aguaSolo, int nutriSolo, int &outNutrientes) {
     outNutrientes = absorcao_nutrientes;
     return absorcao_agua;
 }

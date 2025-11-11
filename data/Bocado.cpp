@@ -17,6 +17,7 @@ Bocado::Bocado( const int aguaMin, const int aguaMax, const int nutriMin, const 
 Bocado::~Bocado() = default;
 
 int Bocado::iterate(const int instante) {
+    int returnValue = Jardim::NONE;
     if (planta != nullptr) {
         if (jardineiro != nullptr) {
             jardineiro->usaFerramenta();
@@ -29,27 +30,24 @@ int Bocado::iterate(const int instante) {
         int tempNutri = 0;
         int tempAgua = planta->verificaMorte(getAgua(), getNutrientes(), instante, tempNutri);
         if (tempAgua != -1) {
+            std::cout << "Morreu " << planta->getId() << std::endl;
             killPlanta(tempAgua, tempNutri);// Se a planta morrer
             return Jardim::DEAD;
         }
         // Alimenta a planta
-        tempAgua = planta->alimentar(getAgua(), getNutrientes(), tempNutri);
+        tempAgua = planta->instante(getAgua(), getNutrientes(), tempNutri);
         perdeAgua(planta->addAgua(tempAgua));
         perdeNutrientes(planta->addNutrientes(tempNutri));
 
-        if (planta->getId() == Planta::ROSEIRA) {
-            return Jardim::ROSEIRAVIZINHOS;
-        }
         if (planta->verificaExpansao(agua, nutrientes, instante)) {
-            return Jardim::EXPAND;
+            returnValue = Jardim::EXPAND;
         }
         if (planta->getId() == Planta::PLANTAEXOTICA) {
             std::cout << "PE wants to expand!" << std::endl;
-            return Jardim::PLANTAEXOTICAEXPAND;
+            returnValue = Jardim::PLANTAEXOTICAEXPAND;
         }
-        return Jardim::ALIVE;
     }
-    return Jardim::NONE;
+    return returnValue;
 }
 int Bocado::perdeAgua(const int unidades) {
     // Verifica se vai subtrair até ficar menor a 0 (não devia mas ok)
@@ -112,9 +110,10 @@ std::string Bocado::toString() const {
 // ----------------- Plant Logic -----------------------------
 
 char Bocado::getIdFromPlant() const {
-    if (planta!= nullptr)
+    if (planta!= nullptr) {
         return planta->getId();
-    return 'n';
+    }
+    return ' ';
 }
 bool Bocado::newPlant(const std::shared_ptr<Planta>& newPlanta) {
     if (planta != nullptr)
@@ -159,6 +158,7 @@ void Bocado::killPlanta(const int aguaRetirada, const int nutrientesRetirados) {
     ganhaAgua(aguaRetirada);
     ganhaNutrientes(nutrientesRetirados);
     planta = nullptr;
+    std::cout << "muerta"<< std::endl;
 }
 
 int Bocado::getAguaNutriMorte(int &outNutrientes) const {
