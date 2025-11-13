@@ -7,7 +7,7 @@
 #include <iostream>
 #include <sstream> // Necessário para std::istringstream
 
-Simulador::Simulador() : jardim(nullptr), copiaJardim(nullptr) {
+Simulador::Simulador() : jardim(nullptr), copiaJardim(nullptr), step(1), plantedInInstant(0) {
     instante = 0;
 }
 Simulador::~Simulador() {
@@ -20,6 +20,8 @@ void Simulador::run() {
     std::cout << "Escreve 'ajuda' para ver os comandos disponiveis.\n";
     bool temp;
     while (!terminou) {
+        if (jardim != nullptr)
+            std::cout << jardim->toString();
         do {
             std::cout << "> ";
             std::getline(std::cin, linha);
@@ -31,6 +33,7 @@ void Simulador::run() {
             for (int i = 0; i < step; i++) {
                 jardim->iterate(instante);
                 instante ++;
+                plantedInInstant = 0;
             }
             step = 1;
         }
@@ -62,14 +65,21 @@ bool Simulador::interpretaComando(std::istringstream& iss) {
         std::string token1, token2;
         // Tenta ler os dois argumentos necessários
         if (!(iss >> token1 >> token2)) {
-            std::cout << "[ERRO] Uso: jardim <linhas> <colunas>\n";
+            std::cerr << "[ERRO] Uso: jardim <linhas> <colunas>\n";
+        }
+        int linhas;
+        int colunas;
+        try {
+            linhas = std::stoi(token1);
+            colunas = std::stoi(token2);
+        }catch (const std::invalid_argument& e) {
+            std::cerr << "Error: Argumento invalido." << std::endl;
+            std::cerr << "É preciso inserir um numero." << std::endl;
+            return false;
         }
 
-        const int linhas = std::stoi(token1);
-        const int colunas = std::stoi(token2);
-
         if (linhas <= 0 || colunas <= 0 || linhas > 26 || colunas > 26) {
-            std::cout << "[ERRO] Dimensoes invalidas. Use entre 1 e 26.\n";
+            std::cerr << "[ERRO] Dimensoes invalidas. Use entre 1 e 26.\n\n";
         }
 
         delete jardim;
@@ -92,36 +102,49 @@ bool Simulador::interpretaComando(std::istringstream& iss) {
     if (cmd == "avanca") {
         std::string token1;
         if (iss >> token1) { // Se conseguir ler um argumento opcional
-            step = std::stoi(token1);
+            try {
+                step = std::stoi(token1);
+            }catch (const std::invalid_argument& e) {
+                std::cerr << "Error: Argumento invalido." << std::endl;
+                std::cerr << "É preciso inserir um numero.\n" << std::endl;
+            }
         }
-        std::cout << "Avança " << step << " instantes.\n";
+        std::cout << "Avanca " << step << " instantes.\n\n";
         return true;
     }
 
     // ------------------ COMANDOS DE LISTAGEM ------------------
     if (cmd == "lplantas") {
-        std::cout << jardim->toString();
+        std::cout << jardim->getDataFromPlantas();
     }
 
     if (cmd == "lplanta") {
         std::string token1;
         if (!(iss >> token1)) return false; // Precisa de 1 argumento
-        std::cout << "Imprimindo informacoes da planta em " << token1 << ".\n";
+        int line, col;
+        if (!getNumValuesFromChar(token1, line, col) || !validaPosicao(line, col)) {
+           std::cerr << "Coordenadas invalidas.\n\n";
+            return false;
+        }
+        std::cout << jardim->getDataFromPlanta(line, col);
     }
 
     if (cmd == "larea") {
-        std::cout << "(Meta 1) Listaria area com elementos nao vazios.\n";
-
+        std::cout << jardim->getDataFromSolos();
     }
 
     if (cmd == "lsolo") {
         std::string token1, token2;
         if (!(iss >> token1)) return false; // Precisa de pelo menos 1 argumento
+        int line, col;
+        if (!getNumValuesFromChar(token1, line, col) || !validaPosicao(line, col)) {
+            std::cerr << "Coordenadas invalidas.\n";
+            return false;
+        }
+        if (iss >> token2) {
 
-        std::cout << "(Meta 1) Mostraria informacoes do solo em " << token1;
-        if (iss >> token2) // Tenta ler o segundo argumento opcional
-            std::cout << " com raio " << token2;
-        std::cout << ".\n";
+        }
+        std::cout << jardim->getDataFromSolo(line, col);
     }
 
     if (cmd == "lferr") {
@@ -137,17 +160,19 @@ bool Simulador::interpretaComando(std::istringstream& iss) {
     }
 
     if (cmd == "planta") {
+        if (plantedInInstant == 2) {
+            std::cerr << "Limite de plantas atingido neste instante.\n\n";
+            return false;
+        }
         std::string token1, token2;
         if (!(iss >> token1 >> token2)) return false; // Precisa de 2 argumentos
-        std::cout << "(Meta 1) Plantaria tipo " << token2
-                  << " em " << token1 << ".\n";
-        auto line = getNumValueFromChar(token1[0]);
-        auto col = getNumValueFromChar(token1[1]);
-        if (line < 0 || col < 0 || line >= jardim->getLinhas() || col >= jardim->getColunas()) {
-            std::cout << "Coordenadas invalidas.\n";
+        int line, col;
+        if (!getNumValuesFromChar(token1, line, col) || !validaPosicao(line, col)) {
+            std::cerr << "Coordenadas invalidas.\n\n";
             return false;
         }
         jardim->sowPlant(token2.at(0), line, col);
+        plantedInInstant++;
     }
 
     if (cmd == "larga") {
@@ -215,7 +240,7 @@ bool Simulador::interpretaComando(std::istringstream& iss) {
 }
 
 void Simulador::mostraAjuda() {
-    std::cout << "===== COMANDOS DISPONIVEIS (META 1) =====\n";
+    std::cout << "===== COMANDOS DISPONIVEIS =====\n";
     std::cout << "Tempo: avanca [n]\n";
     std::cout << "Listagem: lplantas | lplanta <l><c> | larea | lsolo <l><c> [n] | lferr\n";
     std::cout << "Acoes: colhe <l><c> | planta <l><c> <tipo> | larga | pega <n> | compra <c>\n";
@@ -227,8 +252,28 @@ void Simulador::mostraAjuda() {
 std::string Simulador::leComandoFicheiro(const std::string &filename) {
     return "Incompleto";
 }
-int Simulador::getNumValueFromChar(const char arg) {
-    const auto argMinus = tolower(arg);
-        return argMinus - 'a';
+int Simulador::getNumValuesFromChar(const std::string& arg, int & line, int & col) {
+    if (arg.length() < 2) {
+        line = -1;
+        col = -1;
+        return false;
+    }
+    const char char_linha = arg[0];
+    const char char_coluna = arg[1];
+
+    if (!std::islower(char_linha) || !std::islower(char_coluna)) {
+        line = -1;
+        col = -1;
+        return false;
+    }
+
+    line = char_linha - 'a';
+    col = char_coluna - 'a';
+
+    return true;
 }
+bool Simulador::validaPosicao(const int linha, const int coluna) const {
+    return (linha >= 0 && linha < jardim->getLinhas() && coluna >= 0 && coluna < jardim->getColunas());
+}
+
 

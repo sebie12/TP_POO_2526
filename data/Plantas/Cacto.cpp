@@ -52,7 +52,7 @@ bool Cacto::verificaExpansao(int agua, int nutrientes, int instanteAtual) {
 }
 
 int Cacto::instante(const int aguaSolo, int nutriSolo, int & outNutrientes) {
-    const float temp = static_cast<float>(aguaSolo) * (static_cast<float>(absorcao_agua_percentagem )/100);
+    const float temp = static_cast<float>(aguaSolo) * (static_cast<float>(absorcao_agua_percentagem)/100);
     outNutrientes = absorcao_nutrientes;
     return static_cast<int>(temp);
 

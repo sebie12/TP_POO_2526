@@ -6,10 +6,10 @@ class Settings {
     public:
     class Jardim {
     public:
-        static const int agua_min = 400;
-        static const int agua_max = 500;
-        static const int nutrientes_min = 400;
-        static const int nutrientes_max = 500;
+        static const int agua_min = 80;
+        static const int agua_max = 100;
+        static const int nutrientes_min = 40;
+        static const int nutrientes_max = 50;
     };
     class Regador {
     public:

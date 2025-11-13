@@ -35,17 +35,23 @@ public:
     };
 
     void iterate(int instante);
-    void processaCambio(int tipo, int linha, int col);
+    void processaCambio(int tipo, int linha, int col) const;
     void expand(int linha, int col) const;
     bool hasFullViznhos(int linha, int col) const;
     std::array<int,4> verificaLimites(int linha, int col) const;
-    std::string getDataFromBocado(int i, int j) const;
-    std::string toString() const;
-    void sowPlant(char type, int linha, int col);
+    void sowPlant(char type, int linha, int col) const;
     void genRandPlants() const;
 
     int getLinhas() const;
     int getColunas() const;
+
+    std::string getDataFromPlantas() const;
+    std::string getDataFromPlanta(int i, int j) const;
+
+    std::string getDataFromSolos() const;
+    std::string getDataFromSolo(int i, int j) const;
+
+    std::string toString() const;
 
 };
 

@@ -98,6 +98,10 @@ char Bocado::getIdForPrint() const {
 
 std::string Bocado::toString() const {
     std::ostringstream oss;
+    if (planta == nullptr && jardineiro == nullptr && ferramenta == nullptr) {
+        oss << " ";
+        return oss.str();
+    }
     oss << "Agua: " << agua << " Nutrientes: " << nutrientes << "\n";
     oss << "Planta: " << (planta != nullptr ? getIdFromPlant() : 'N') << "\n";
     oss << planta->toString() << "\n";
@@ -174,6 +178,14 @@ std::shared_ptr<Ferramenta> Bocado::removeFerramenta() {
     const auto temp = ferramenta;
     ferramenta = nullptr;
     return temp;
+}
+
+//  ------------------ Listagem -------------------------------
+std::string Bocado::getDataFromPlanta() const {
+    if (planta == nullptr) {
+        return "";
+    }
+    return planta->toString();
 }
 
 

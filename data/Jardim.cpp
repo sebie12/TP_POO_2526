@@ -36,7 +36,7 @@ void Jardim::iterate(const int instante) {
         }
     }
 }
-void Jardim::sowPlant(const char type, const int linha, const int col) {
+void Jardim::sowPlant(const char type, const int linha, const int col) const {
     shared_ptr<Planta> temp;
     switch (type) {
         case Planta::CACTO:
@@ -57,7 +57,7 @@ void Jardim::sowPlant(const char type, const int linha, const int col) {
     area[linha][col]->newPlant(temp);
 }
 
-void Jardim::processaCambio(const int tipo, const int linha, const int col)  {
+void Jardim::processaCambio(const int tipo, const int linha, const int col) const {
     if (area[linha][col]->getIdFromPlant() == Planta::ROSEIRA) {
         if (hasFullViznhos(linha, col)) {
             cout << "Roseira at " << linha << "," << col << " has full vizinhos!" << endl;
@@ -99,6 +99,7 @@ void Jardim::expand(const int linha, const int col) const {
 
     }
     for (int i = 0; i < 4; i++) {
+
         const int linhaNova = i < 2 ? linha + directions[i] : linha;
         const int colunaNova = i < 2 ? col : col + directions[i];
         auto temp = Planta::createPlant(tipo);
@@ -148,12 +149,8 @@ bool Jardim::hasFullViznhos(const int linha, const int col) const {
 
     return true;
 }
-std::string Jardim::getDataFromBocado(const int i, const int j) const { // Esta a dar coisa mala
-    if (area[i][j] == nullptr) {
-        return "Empty";
-    }
-    return area[i][j]->toString();
-}
+
+// Listagem ------------------------------------------
 
 string Jardim::toString() const {
     ostringstream oss;
@@ -207,6 +204,45 @@ int Jardim::getLinhas() const {
 }
 int Jardim::getColunas() const {
     return nCols;
+}
+
+std::string Jardim::getDataFromSolo(const int i, const int j) const {
+    auto temp = area[i][j]->toString();
+    if (temp == " ") {
+        return "Empty";
+    }
+    return temp;
+}
+std::string Jardim::getDataFromSolos() const {
+    ostringstream oss;
+    for (int i = 0; i < nLines; i++) {
+        for (int j = 0; j < nCols; j++) {
+            auto temp = getDataFromSolo(i,j);
+            if (temp == "Empty")
+                continue;
+            oss << "Solo em " << static_cast<char>('A' + i)<< " " << static_cast<char>('A' + j) <<":\n";
+            oss << getDataFromSolo(i,j) << endl;
+        }
+    }
+    return oss.str();
+}
+
+std::string Jardim::getDataFromPlanta(const int i, const int j) const {
+    ostringstream oss;
+    oss << "Planta em " << static_cast<char>('A' + i)<< " " << static_cast<char>('A' + j) <<":\n";
+    oss << area[i][j]->getDataFromPlanta();
+    return oss.str();
+}
+
+std::string Jardim::getDataFromPlantas() const {
+    ostringstream oss;
+    for (int i = 0; i < nLines; i++) {
+        for (int j = 0; j < nCols; j++) {
+            if (area[i][j]->hasPlant())
+                oss << getDataFromPlanta(i,j) << endl;
+        }
+    }
+    return oss.str();
 }
 
 

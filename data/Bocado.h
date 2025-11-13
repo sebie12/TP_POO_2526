@@ -25,7 +25,6 @@ public:
     Bocado(int aguaMin, int aguaMax, int nutriMin, int nutriMax);
     ~Bocado();
     int iterate(int instante);
-    std::string toString()const;
 
     // PLant Logic
     void killPlanta(int aguaRetirada, int nutrientesRetirados);
@@ -51,8 +50,10 @@ public:
 
     // Ferramenta Logic
     void newFerramenta(char tipo);
-   std::shared_ptr<Ferramenta> removeFerramenta();
-
+    std::shared_ptr<Ferramenta> removeFerramenta();
+    // Listagem
+    std::string getDataFromPlanta()const;
+    std::string toString()const;
 
 };
 

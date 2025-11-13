@@ -14,7 +14,7 @@ void Jardineiro::equipaFerramenta(const int id) {
     ferrEquipada = buscaFerramenta(id); // Atualiza o indice da ferramenta equipada
 }
 int Jardineiro::buscaFerramenta(const int id) const { // Busca o Indice da ferramente que tem o id igual ao argumento
-
+    return 0;
 }
 void Jardineiro::pegaFerramenta(const std::shared_ptr<Ferramenta>& novaFerramenta) {
 
